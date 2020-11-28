@@ -33,7 +33,7 @@ orderRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: 'Cart is empty' });
+      res.status(400).send({ message: 'Panier Vide' });
     } else {
       const order = new Order({
         seller: req.body.orderItems[0].seller,
@@ -41,7 +41,7 @@ orderRouter.post(
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
-        shippingPrice: req.body.shippingPrice,
+        shippingPrice: 0,
         taxPrice: req.body.taxPrice,
         totalPrice: req.body.totalPrice,
         user: req.user._id,
@@ -49,7 +49,7 @@ orderRouter.post(
       const createdOrder = await order.save();
       res
         .status(201)
-        .send({ message: 'New Order Created', order: createdOrder });
+        .send({ message: 'Nouvelle commande créée', order: createdOrder });
     }
   })
 );

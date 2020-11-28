@@ -27,7 +27,7 @@ body {
 }
 header {
   grid-area: header;
-  background-color: #203040;
+  background-color: #93C572;
 }
 main {
   grid-area: main;
@@ -35,7 +35,7 @@ main {
 }
 footer {
   grid-area: footer;
-  background-color: #203040;
+  background-color: #93C572;
   color: #ffffff;
 }
 /* Common */
@@ -68,7 +68,7 @@ textarea,
 button {
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 0.1rem #a4a4a4 solid;
+  border: 0.1rem #B3F75D solid;
   font-size: 1.6rem;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -82,10 +82,11 @@ input:hover,
 select:hover,
 textarea:hover,
 button:hover {
-  border: 0.1rem #404040 solid;
+  border: 0.1rem #fff solid;
 }
 button.primary {
-  background-color: #f0c040;
+  background-color: #4F7A48;
+  color: #fff;
 }
 button.block {
   width: 100%;
@@ -191,7 +192,7 @@ img.medium {
   width: 100%;
 }
 img.large {
-  width: 100%;
+  width: 90%;
 }
 
 /* Card */
@@ -325,4 +326,28 @@ img.large {
 }
 .active {
   font-weight: bold;
+}
+
+/* Map */
+.full-container {
+  margin: -1rem;
+  height: calc(100% + 2rem);
+}
+.map-input-box {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0.5rem auto;
+  width: 25rem;
+  height: 4rem;
+  display: flex;
+}
+.map-input-box input {
+  border-radius: 1rem 0 0 1rem;
+  border-right: 0;
+}
+.map-input-box button {
+  border-radius: 0 1rem 1rem 0;
+  border-left: 0;
 }

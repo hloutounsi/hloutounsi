@@ -18,12 +18,12 @@ export default function Product(props) {
           numReviews={product.numReviews}
         ></Rating>
         <div className="row">
-          <div className="price">${product.price}</div>
-          <div>
+          <div className="price">{product.price}‎€</div>
+          {product.seller && <div>
             <Link to={`/seller/${product.seller._id}`}>
-              {product.seller.seller.name}
+              {product.seller.name}
             </Link>
-          </div>
+          </div>}
         </div>
       </div>
     </div>

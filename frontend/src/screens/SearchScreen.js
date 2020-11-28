@@ -146,7 +146,7 @@ export default function SearchScreen(props) {
           ) : (
             <>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <MessageBox>Aucun produit trouvé</MessageBox>
               )}
               <div className="row center">
                 {products.map((product) => (

@@ -39,10 +39,10 @@ export default function PlaceOrderScreen(props) {
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Shipping</h2>
+                <h2>Livraison</h2>
                 <p>
-                  <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {cart.shippingAddress.address},
+                  <strong>Nom:</strong> {cart.shippingAddress.fullName} <br />
+                  <strong>Adresse: </strong> {cart.shippingAddress.address},
                   {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
                   ,{cart.shippingAddress.country}
                 </p>
@@ -50,15 +50,15 @@ export default function PlaceOrderScreen(props) {
             </li>
             <li>
               <div className="card card-body">
-                <h2>Payment</h2>
+                <h2>Paiement</h2>
                 <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
+                  <strong>Methode:</strong> {cart.paymentMethod}
                 </p>
               </div>
             </li>
             <li>
               <div className="card card-body">
-                <h2>Order Items</h2>
+                <h2>Produits de commande</h2>
                 <ul>
                   {cart.cartItems.map((item) => (
                     <li key={item.product}>
@@ -77,7 +77,7 @@ export default function PlaceOrderScreen(props) {
                         </div>
 
                         <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x {item.price}€ = {item.qty * item.price}€
                         </div>
                       </div>
                     </li>
@@ -91,33 +91,33 @@ export default function PlaceOrderScreen(props) {
           <div className="card card-body">
             <ul>
               <li>
-                <h2>Order Summary</h2>
+                <h2>Récapitulatif de la commande</h2>
               </li>
               <li>
                 <div className="row">
-                  <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                  <div>Les elements</div>
+                  <div>{cart.itemsPrice.toFixed(2)}€</div>
                 </div>
               </li>
               <li>
                 <div className="row">
-                  <div>Shipping</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
+                  <div>Livraison</div>
+                  <div>{cart.shippingPrice.toFixed(2)}€</div>
                 </div>
               </li>
               <li>
                 <div className="row">
-                  <div>Tax</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
+                  <div>Taxe</div>
+                  <div>{cart.taxPrice.toFixed(2)}€</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>
-                    <strong> Order Total</strong>
+                    <strong>Totale</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>{cart.totalPrice.toFixed(2)}€</strong>
                   </div>
                 </div>
               </li>
@@ -128,7 +128,7 @@ export default function PlaceOrderScreen(props) {
                   className="primary block"
                   disabled={cart.cartItems.length === 0}
                 >
-                  Place Order
+                  Passer la commande
                 </button>
               </li>
               {loading && <LoadingBox></LoadingBox>}
