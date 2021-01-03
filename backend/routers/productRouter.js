@@ -1,5 +1,5 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
+const express = require('express')
+const expressAsyncHandler = require('express-async-handler')
 import data from '../data.js';
 import Product from '../models/productModel.js';
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
