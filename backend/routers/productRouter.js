@@ -1,8 +1,8 @@
 const express = require('express')
 const expressAsyncHandler = require('express-async-handler')
-import data from '../data.js';
-import Product from '../models/productModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+const data = require('../data.js')
+const Product = require('../models/productModel.js')
+const utils = require('../utils.js')
 
 const productRouter = express.Router();
 
@@ -83,8 +83,8 @@ productRouter.get(
 
 productRouter.post(
   '/',
-  isAuth,
-  isSellerOrAdmin,
+  utils.isAuth,
+  utils.isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: 'sample name ' + Date.now(),
@@ -104,8 +104,8 @@ productRouter.post(
 );
 productRouter.put(
   '/:id',
-  isAuth,
-  isSellerOrAdmin,
+  utils.isAuth,
+  utils.isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
@@ -127,8 +127,8 @@ productRouter.put(
 
 productRouter.delete(
   '/:id',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
@@ -142,7 +142,7 @@ productRouter.delete(
 
 productRouter.post(
   '/:id/reviews',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);

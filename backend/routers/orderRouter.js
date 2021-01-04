@@ -1,13 +1,13 @@
 const express = require('express')
 const expressAsyncHandler = require('express-async-handler')
-import Order from '../models/orderModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+const Order = require('../models/orderModel.js')
+const utils = require('../utils.js')
 
 const orderRouter = express.Router();
 orderRouter.get(
   '/',
-  isAuth,
-  isSellerOrAdmin,
+  utils.isAuth,
+  utils.isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller || '';
     const sellerFilter = seller ? { seller } : {};
@@ -21,7 +21,7 @@ orderRouter.get(
 );
 orderRouter.get(
   '/mine',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
     res.send(orders);
@@ -30,7 +30,7 @@ orderRouter.get(
 
 orderRouter.post(
   '/',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: 'Panier Vide' });
@@ -56,7 +56,7 @@ orderRouter.post(
 
 orderRouter.get(
   '/:id',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -69,7 +69,7 @@ orderRouter.get(
 
 orderRouter.put(
   '/:id/pay',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -91,8 +91,8 @@ orderRouter.put(
 
 orderRouter.delete(
   '/:id',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
@@ -106,8 +106,8 @@ orderRouter.delete(
 
 orderRouter.put(
   '/:id/deliver',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {

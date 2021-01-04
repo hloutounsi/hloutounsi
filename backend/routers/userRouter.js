@@ -1,10 +1,9 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import bcrypt from 'bcryptjs';
-import data from '../data.js';
-import User from '../models/userModel.js';
-import { generateToken, isAdmin, isAuth } from '../utils.js';
-
+const express = require('express')
+const bcrypt = require('bcrypt')
+const expressAsyncHandler = require('express-async-handler')
+const data = require('../data.js')
+const User = require('../models/userModel.js')
+const utils = require('../utils.js')
 const userRouter = express.Router();
 
 userRouter.get(
@@ -38,7 +37,7 @@ userRouter.post(
           email: user.email,
           isAdmin: user.isAdmin,
           isSeller: user.isSeller,
-          token: generateToken(user),
+          token: utils.generateToken(user),
         });
         return;
       }
@@ -62,7 +61,7 @@ userRouter.post(
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
       isSeller: user.isSeller,
-      token: generateToken(createdUser),
+      token: utils.generateToken(createdUser),
     });
   })
 );
@@ -80,7 +79,7 @@ userRouter.get(
 );
 userRouter.put(
   '/profile',
-  isAuth,
+  utils.isAuth,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
     if (user) {
@@ -102,7 +101,7 @@ userRouter.put(
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
         isSeller: user.isSeller,
-        token: generateToken(updatedUser),
+        token: utils.generateToken(updatedUser),
       });
     }
   })
@@ -110,8 +109,8 @@ userRouter.put(
 
 userRouter.get(
   '/',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const users = await User.find({});
     res.send(users);
@@ -120,8 +119,8 @@ userRouter.get(
 
 userRouter.delete(
   '/:id',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
@@ -139,8 +138,8 @@ userRouter.delete(
 
 userRouter.put(
   '/:id',
-  isAuth,
-  isAdmin,
+  utils.isAuth,
+  utils.isAdmin,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
