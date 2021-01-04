@@ -2,7 +2,7 @@ const express = require('express')
 const expressAsyncHandler = require('express-async-handler')
 const data = require('../data.js')
 const Product = require('../models/productModel.js')
-const utils = require('../utils.js')
+import { isAuth, isAdmin, isSellerOrAdmin } from '../util';
 
 const productRouter = express.Router();
 
