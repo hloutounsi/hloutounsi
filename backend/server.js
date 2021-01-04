@@ -3,10 +3,10 @@ import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import config from './config';
-import userRoute from './routes/userRouter';
-import productRoute from './routes/productRouter';
-import orderRoute from './routes/orderRouter';
-import uploadRoute from './routes/uploadRouter';
+import userRoute from './routers/userRouter';
+import productRoute from './routers/productRouter';
+import orderRoute from './routers/orderRouter';
+import uploadRoute from './routers/uploadRouter';
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose
