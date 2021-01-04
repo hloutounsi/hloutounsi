@@ -5,7 +5,9 @@
   "description": "Ecommerce website like amazon",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "nodemon --watch backend --exec babel-node backend/server.js",
+    "build": "rm -rf dist && babel backend -d dist  && cd frontend && npm install && npm run build",
+    "heroku-postbuild-x": "npm run build && cd frontend && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -14,7 +16,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -24,6 +25,10 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "eslint": "^7.9.0",
     "eslint-plugin-react": "^7.21.2",
     "nodemon": "^2.0.4"
