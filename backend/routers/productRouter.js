@@ -36,15 +36,7 @@ productRouter.get(
         ? { rating: -1 }
         : { _id: -1 };
 
-    const products = await Product.find({
-      ...sellerFilter,
-      ...nameFilter,
-      ...categoryFilter,
-      ...priceFilter,
-      ...ratingFilter,
-    })
-      .populate('seller', 'seller.name seller.logo')
-      .sort(sortOrder);
+    const products = await Product.find({});
     res.send(products);
   })
 );
