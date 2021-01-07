@@ -68,13 +68,16 @@ function App() {
               </Link>
             </Grid>
             <Grid item xs={6} sm={4}>
+              <div>
               <Route
                 render={({ history }) => (
                   <SearchBox history={history}></SearchBox>
                 )}
               ></Route>
+              </div>
             </Grid>
             <Grid item xs={6} sm={4}>
+              <div>
               <Link to="/cart">
                 Panier
                 {cartItems.length > 0 && (
@@ -139,6 +142,7 @@ function App() {
                   </ul>
                 </div>
               )}
+              </div>
             </Grid>
           </Grid>
         </header>
