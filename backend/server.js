@@ -2,11 +2,11 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import config from './config';
-import userRoute from './routers/userRouter';
-import productRoute from './routers/productRouter';
-import orderRoute from './routers/orderRouter';
-import uploadRoute from './routers/uploadRouter';
+import config from './config.js';
+import userRoute from './routers/userRouter.js';
+import productRoute from './routers/productRouter.js';
+import orderRoute from './routers/orderRouter.js';
+import uploadRoute from './routers/uploadRouter.js';
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose
