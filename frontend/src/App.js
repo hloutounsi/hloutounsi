@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
@@ -53,91 +54,93 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <header className="row">
-          <div>
-            <button
-              type="button"
-              className="open-sidebar"
-              onClick={() => setSidebarIsOpen(true)}
-            >
-              <i className="fa fa-bars"></i>
-            </button>
-            <Link className="brand" to="/">
-              Gâteau Tunsien
-            </Link>
-          </div>
-          <div>
-            <Route
-              render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={4}>
+              <button
+                type="button"
+                className="open-sidebar"
+                onClick={() => setSidebarIsOpen(true)}
+              >
+                <i className="fa fa-bars"></i>
+              </button>
+              <Link className="brand" to="/">
+                Gâteau Tunisien
+              </Link>
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <Route
+                render={({ history }) => (
+                  <SearchBox history={history}></SearchBox>
+                )}
+              ></Route>
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <Link to="/cart">
+                Panier
+                {cartItems.length > 0 && (
+                  <span className="badge">{cartItems.length}</span>
+                )}
+              </Link>
+              {userInfo ? (
+                <div className="dropdown">
+                  <Link to="#">
+                    {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/profile">Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderhistory">Historique de commande</Link>
+                    </li>
+                    <li>
+                      <Link to="#signout" onClick={signoutHandler}>
+                        Déconnexion
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <Link to="/signin">Connexion</Link>
               )}
-            ></Route>
-          </div>
-          <div>
-            <Link to="/cart">
-              Panier
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
+              {userInfo && userInfo.isSeller && (
+                <div className="dropdown">
+                  <Link to="#admin">
+                    Vendeur <i className="fa fa-caret-down"></i>
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/productlist/seller">Produits</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist/seller">Commandes</Link>
+                    </li>
+                  </ul>
+                </div>
               )}
-            </Link>
-            {userInfo ? (
-              <div className="dropdown">
-                <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/profile">Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderhistory">Historique de commande</Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signoutHandler}>
-                      Déconnexion
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link to="/signin">Connexion</Link>
-            )}
-            {userInfo && userInfo.isSeller && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Vendeur <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/productlist/seller">Produits</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist/seller">Commandes</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Produits</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Commandes</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Utilisateurs</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
+              {userInfo && userInfo.isAdmin && (
+                <div className="dropdown">
+                  <Link to="#admin">
+                    Admin <i className="fa fa-caret-down"></i>
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+                    <li>
+                      <Link to="/productlist">Produits</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist">Commandes</Link>
+                    </li>
+                    <li>
+                      <Link to="/userlist">Utilisateurs</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </Grid>
+          </Grid>
         </header>
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
