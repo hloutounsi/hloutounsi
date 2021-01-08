@@ -18,7 +18,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 app.use(bodyParser.json());
 app.use('/api/uploads', uploadRoute);
 app.use('/api/users', userRoute);
