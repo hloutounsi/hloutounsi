@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   inputInput: {
+    width: '10ch',
     padding: theme.spacing(1),
     // vertical padding + font size from searchIcon
     // paddingRight: `calc(1em + ${theme.spacing(4)}px)`,
@@ -40,7 +41,7 @@ export default function SearchBox(props) {
     <form className="search" onSubmit={submitHandler}>
       <div className={classes.search}>
         <InputBase
-          placeholder="Chercher votre produit…"
+          placeholder="Chercher…"
           name="q"
           id="q"
           onChange={(e) => setName(e.target.value)}

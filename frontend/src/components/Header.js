@@ -142,12 +142,16 @@ export default function Header({
           </MenuItem>
       </>}
 
-      <MenuItem to="#signout" onClick={signoutHandler}>
-        Déconnexion
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <Link to="#signout" onClick={signoutHandler}>
+            Déconnexion
+        </Link>
       </MenuItem>
       </>
       ) : (
-        <MenuItem to="/signin">Connexion</MenuItem>
+        <MenuItem onClick={handleProfileMenuOpen}>
+        <Link to="/signin">Connexion</Link>
+        </MenuItem>
       )}
     </Menu>
   );
