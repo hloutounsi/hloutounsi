@@ -54,9 +54,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className="grid-container">
-        <Header cartItems={cartItems}/>
+        <Header
+        cartItems={cartItems}
+        userInfo={userInfo}
+        setSidebarIsOpen={setSidebarIsOpen} />
         <header className="row">
-          <Grid container spacing={3}>
+          <Grid container>
             <Grid item xs={12} sm={4}>
               <button
                 type="button"
@@ -93,7 +96,7 @@ function App() {
                   </Link>
                   <ul className="dropdown-content">
                     <li>
-                      <Link to="/profile">Profile</Link>
+                      <Link to="/profile">Profil</Link>
                     </li>
                     <li>
                       <Link to="/orderhistory">Historique de commande</Link>

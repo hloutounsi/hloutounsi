@@ -2,15 +2,15 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Route, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -22,49 +22,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   title: {
     display: 'none',
+    marginRight: theme.spacing(1),
     [theme.breakpoints.up('sm')]: {
       display: 'block',
-    },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
     },
   },
   sectionDesktop: {
@@ -81,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({cartItems}) {
+export default function Header({cartItems, userInfo, setSidebarIsOpen}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -172,27 +136,34 @@ export default function Header({cartItems}) {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={() => setSidebarIsOpen(true)}
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Gâteau Tunisien
           </Typography>
-          <div className={classes.search}>
           <Route
             render={({ history }) => (
               <SearchBox history={history}></SearchBox>
             )}
           ></Route>
-          </div>
           <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
           <Link to="/cart">
               Panier
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
-          <div className={classes.sectionDesktop}>
+            {userInfo ? (
+              <>
+              <Link to="/profile">Profil</Link>
+              <Link to="/orderhistory">Historique de commande</Link>
+              </>
+              ) : (
+                <Link to="/signin">Connexion</Link>
+              )}
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -215,6 +186,17 @@ export default function Header({cartItems}) {
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
+            <Link to="/cart">
+              <ShoppingCartIcon />
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}
+            </Link>
+            {userInfo ? (
+              <Link to="/profile"><AccountCircle /></Link>
+              ) : (
+                <Link to="/signin"><LockOpenIcon /></Link>
+              )}
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
