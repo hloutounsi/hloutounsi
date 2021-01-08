@@ -156,7 +156,7 @@ export default function Header({
     >
       {userInfo ? (
       <>
-        <MenuItem>
+        <MenuItem onClick={handleMobileMenuClose}>
           <ShoppingBasketIcon />
           <Link to="/orderhistory">Historique de commande</Link>
         </MenuItem>
@@ -222,9 +222,11 @@ export default function Header({
           >
             <MenuIcon />
           </IconButton>
+          <Link to="/">
           <Typography className={classes.title} variant="h4" noWrap>
             Gâteau Tunisien
           </Typography>
+          </Link>
           <Link to="/" className={classes.home}>
             <Home />
           </Link>
