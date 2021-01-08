@@ -6,6 +6,7 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -45,7 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({cartItems, userInfo, setSidebarIsOpen}) {
+export default function Header({
+  cartItems,
+  userInfo,
+  setSidebarIsOpen,
+  signoutHandler
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -81,8 +87,8 @@ export default function Header({cartItems, userInfo, setSidebarIsOpen}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/productlist/seller">Produits</Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link to="/orderlist/seller">Commandes</Link></MenuItem>
     </Menu>
   );
 
@@ -160,6 +166,28 @@ export default function Header({cartItems, userInfo, setSidebarIsOpen}) {
               <>
               <Link to="/profile">Profil</Link>
               <Link to="/orderhistory">Historique de commande</Link>
+              {userInfo.isSeller && <Button
+                href="#admin"
+                style={{ fontSize: "inherit", fontFamilly: "inherit", textTransform: "inherit" }}
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                Vendeur
+              </Button>}
+
+              {userInfo.isSeller && <>
+                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/productlist">Produits</Link>
+                <Link to="/orderlist">Commandes</Link>
+                <Link to="/userlist">Utilisateurs</Link>
+              </>}
+
+              <Link to="#signout" onClick={signoutHandler}>
+                Déconnexion
+              </Link>
               </>
               ) : (
                 <Link to="/signin">Connexion</Link>
@@ -174,23 +202,12 @@ export default function Header({cartItems, userInfo, setSidebarIsOpen}) {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <Link to="/cart">
-              <ShoppingCartIcon />
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
+              <Badge badgeContent={cartItems.length} color="secondary">
+                  <ShoppingCartIcon />
+              </Badge>
             </Link>
             {userInfo ? (
               <Link to="/profile"><AccountCircle /></Link>
