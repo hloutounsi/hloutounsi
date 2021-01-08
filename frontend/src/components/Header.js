@@ -103,21 +103,11 @@ export default function Header({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      {userInfo ? (
+      <>
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <NotificationsIcon />
+        <Link to="/orderhistory">Historique de commande</Link>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -128,8 +118,34 @@ export default function Header({
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <MenuItem to="/profile">Profil</MenuItem>
+        {userInfo.isSeller && <Button
+                href="#admin"
+                style={{ fontSize: "inherit", fontFamilly: "inherit", textTransform: "inherit" }}
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                Vendeur
+              </Button>}
+
+              {userInfo.isSeller && <>
+                <MenuItem to="/dashboard">Dashboard</MenuItem>
+                <MenuItem to="/productlist">Produits</MenuItem>
+                <MenuItem to="/orderlist">Commandes</MenuItem>
+                <MenuItem to="/userlist">Utilisateurs</MenuItem>
+              </>}
+
+              <MenuItem to="#signout" onClick={signoutHandler}>
+                Déconnexion
+              </MenuItem>
       </MenuItem>
+      </>
+      ) : (
+        <MenuItem to="/signin">Connexion</MenuItem>
+      )}
     </Menu>
   );
 
