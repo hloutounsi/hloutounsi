@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
+import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -53,6 +54,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="grid-container">
+        <Header cartItems={cartItems}/>
         <header className="row">
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
