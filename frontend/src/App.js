@@ -155,7 +155,7 @@ function App() {
 
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
-        <footer className="row center">All right reserved</footer>
+        <footer className="row center" style={{ backgroundColor: "#BB1918", color: "#F8EBC0" }}>All right reserved</footer>
       </div>
     </BrowserRouter>
   );

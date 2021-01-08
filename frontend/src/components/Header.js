@@ -64,13 +64,19 @@ export default function Header({
 }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElAdmin, setAnchorElAdmin] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
+  const isAdminMenuOpen = Boolean(anchorElAdmin);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleAdminMenuOpen = (event) => {
+    setAnchorElAdmin(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -82,13 +88,18 @@ export default function Header({
     handleMobileMenuClose();
   };
 
+  const handleAdminMenuClose = () => {
+    setAnchorElAdmin(null);
+    handleMobileMenuClose();
+  };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = 'primary-search-account-menu';
   const adminMenuId = 'admin-menu';
-  const renderMenu = (
+  const renderSellerMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -105,27 +116,27 @@ export default function Header({
 
   const renderMenuAdmin = (
     <Menu
-      anchorEl={anchorEl}
+      anchorEl={anchorElAdmin}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={adminMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
+      open={isAdminMenuOpen}
+      onClose={handleAdminMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleAdminMenuClose}>
         <DashboardIcon />
         <Link to="/dashboard">Dashboard</Link>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleAdminMenuClose}>
         <CakeIcon />
         <Link to="/productlist">Produits</Link>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleAdminMenuClose}>
         <ShoppingBasketIcon />
         <Link to="/orderlist">Commandes</Link>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleAdminMenuClose}>
         <PeopleAltIcon />
         <Link to="/userlist">Utilisateurs</Link>
       </MenuItem>
@@ -149,40 +160,41 @@ export default function Header({
           <ShoppingBasketIcon />
           <Link to="/orderhistory">Historique de commande</Link>
         </MenuItem>
-        <MenuItem onClick={handleProfileMenuOpen}>
+        <MenuItem onClick={handleMobileMenuClose}>
           <AccountCircle />
           <Link to="/profile">Profil</Link>
         </MenuItem>
         
-        {userInfo.isSeller && <><MenuItem onClick={handleMenuClose}>
+        {userInfo.isSeller && <>
+        <MenuItem onClick={handleMobileMenuClose}>
           <CakeIcon />
           <Link to="/productlist/seller">Produits de Vendeur</Link>
         </MenuItem>
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleMobileMenuClose}>
           <ShoppingBasketIcon />
           <Link to="/orderlist/seller">Commandes de Vendeur</Link>
         </MenuItem></>}
 
         {userInfo.isAdmin && <>
-          <MenuItem onClick={handleProfileMenuOpen}>
+          <MenuItem onClick={handleMobileMenuClose}>
             <DashboardIcon />
             <Link to="/dashboard">Dashboard</Link>
           </MenuItem>
-          <MenuItem onClick={handleProfileMenuOpen}>
+          <MenuItem onClick={handleMobileMenuClose}>
             <CakeIcon />
             <Link to="/productlist">Produits</Link>
           </MenuItem>
-          <MenuItem onClick={handleProfileMenuOpen}>
+          <MenuItem onClick={handleMobileMenuClose}>
             <ShoppingBasketIcon />
             <Link to="/orderlist">Commandes</Link>
           </MenuItem>
-          <MenuItem onClick={handleProfileMenuOpen}>
+          <MenuItem onClick={handleMobileMenuClose}>
             <PeopleAltIcon />
             <Link to="/userlist">Utilisateurs</Link>
           </MenuItem>
       </>}
 
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleMobileMenuClose}>
         <ExitToAppIcon />
         <Link to="#signout" onClick={signoutHandler}>
             Déconnexion
@@ -190,7 +202,7 @@ export default function Header({
       </MenuItem>
       </>
       ) : (
-        <MenuItem onClick={handleProfileMenuOpen}>
+        <MenuItem onClick={handleMobileMenuClose}>
         <Link to="/signin">Connexion</Link>
         </MenuItem>
       )}
@@ -199,7 +211,7 @@ export default function Header({
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "#BB1918", color: "#F8EBC0" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -251,7 +263,7 @@ export default function Header({
                 aria-label="gestion administrateur"
                 aria-controls={adminMenuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleAdminMenuOpen}
                 color="inherit"
               >
                 Admin
@@ -289,7 +301,7 @@ export default function Header({
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {renderSellerMenu}
       {renderMenuAdmin}
     </div>
   );
