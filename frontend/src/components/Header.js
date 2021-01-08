@@ -1,9 +1,13 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Route, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Home from '@material-ui/icons/Home';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
@@ -13,8 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import CakeIcon from '@material-ui/icons/Cake';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchBox from './SearchBox';
 
@@ -84,6 +87,7 @@ export default function Header({
   };
 
   const menuId = 'primary-search-account-menu';
+  const adminMenuId = 'admin-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -96,6 +100,35 @@ export default function Header({
     >
       <MenuItem onClick={handleMenuClose}><Link to="/productlist/seller">Produits</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}><Link to="/orderlist/seller">Commandes</Link></MenuItem>
+    </Menu>
+  );
+
+  const renderMenuAdmin = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={adminMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <DashboardIcon />
+        <Link to="/dashboard">Dashboard</Link>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <CakeIcon />
+        <Link to="/productlist">Produits</Link>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <ShoppingBasketIcon />
+        <Link to="/orderlist">Commandes</Link>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <PeopleAltIcon />
+        <Link to="/userlist">Utilisateurs</Link>
+      </MenuItem>
     </Menu>
   );
 
@@ -113,36 +146,44 @@ export default function Header({
       {userInfo ? (
       <>
         <MenuItem>
-          <NotificationsIcon />
+          <ShoppingBasketIcon />
           <Link to="/orderhistory">Historique de commande</Link>
         </MenuItem>
         <MenuItem onClick={handleProfileMenuOpen}>
+          <AccountCircle />
           <Link to="/profile">Profil</Link>
         </MenuItem>
         
         {userInfo.isSeller && <><MenuItem onClick={handleMenuClose}>
-            <Link to="/productlist/seller">Produits de Vendeur</Link>
+          <CakeIcon />
+          <Link to="/productlist/seller">Produits de Vendeur</Link>
         </MenuItem>
         <MenuItem onClick={handleMenuClose}>
+          <ShoppingBasketIcon />
           <Link to="/orderlist/seller">Commandes de Vendeur</Link>
         </MenuItem></>}
 
         {userInfo.isAdmin && <>
           <MenuItem onClick={handleProfileMenuOpen}>
+            <DashboardIcon />
             <Link to="/dashboard">Dashboard</Link>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
+            <CakeIcon />
             <Link to="/productlist">Produits</Link>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
+            <ShoppingBasketIcon />
             <Link to="/orderlist">Commandes</Link>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
+            <PeopleAltIcon />
             <Link to="/userlist">Utilisateurs</Link>
           </MenuItem>
       </>}
 
       <MenuItem onClick={handleProfileMenuOpen}>
+        <ExitToAppIcon />
         <Link to="#signout" onClick={signoutHandler}>
             Déconnexion
         </Link>
@@ -169,14 +210,12 @@ export default function Header({
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} variant="h4" noWrap>
             Gâteau Tunisien
           </Typography>
           <Link to="/" className={classes.home}>
-              <Badge badgeContent={cartItems.length} color="secondary">
-                  <Home />
-              </Badge>
-            </Link>
+            <Home />
+          </Link>
           <Route
             render={({ history }) => (
               <SearchBox history={history}></SearchBox>
@@ -206,12 +245,17 @@ export default function Header({
                 Vendeur
               </Button>}
 
-              {userInfo.isAdmin && <>
-                <Link to="/dashboard">Dashboard</Link>
-                <Link to="/productlist">Produits</Link>
-                <Link to="/orderlist">Commandes</Link>
-                <Link to="/userlist">Utilisateurs</Link>
-              </>}
+              {userInfo.isAdmin && <Button
+                href="#admin"
+                style={{ fontSize: "inherit", fontFamilly: "inherit", textTransform: "inherit" }}
+                aria-label="gestion administrateur"
+                aria-controls={adminMenuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                Admin
+              </Button>}
 
               <Link to="#signout" onClick={signoutHandler}>
                 Déconnexion
@@ -246,6 +290,7 @@ export default function Header({
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {renderMenuAdmin}
     </div>
   );
 }
