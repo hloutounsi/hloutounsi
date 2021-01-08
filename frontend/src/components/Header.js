@@ -2,7 +2,7 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Route, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import Home from '@material-ui/icons/Home';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,13 +23,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(1),
+    marginRight: 0,
   },
   title: {
     display: 'none',
     marginRight: theme.spacing(1),
     [theme.breakpoints.up('sm')]: {
       display: 'block',
+    },
+  },
+  home: {
+    display: 'block',
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
     },
   },
   sectionDesktop: {
@@ -110,16 +117,9 @@ export default function Header({
           <Link to="/orderhistory">Historique de commande</Link>
         </MenuItem>
         <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
+          <Link to="/profile">Profil</Link>
         </MenuItem>
-        <MenuItem to="/profile">Profil</MenuItem>
+        
         {userInfo.isSeller && <><MenuItem onClick={handleMenuClose}>
             <Link to="/productlist/seller">Produits de Vendeur</Link>
         </MenuItem>
@@ -128,10 +128,18 @@ export default function Header({
         </MenuItem></>}
 
         {userInfo.isAdmin && <>
-          <MenuItem to="/dashboard">Dashboard</MenuItem>
-          <MenuItem to="/productlist">Produits</MenuItem>
-          <MenuItem to="/orderlist">Commandes</MenuItem>
-          <MenuItem to="/userlist">Utilisateurs</MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <Link to="/dashboard">Dashboard</Link>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <Link to="/productlist">Produits</Link>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <Link to="/orderlist">Commandes</Link>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <Link to="/userlist">Utilisateurs</Link>
+          </MenuItem>
       </>}
 
       <MenuItem to="#signout" onClick={signoutHandler}>
@@ -160,6 +168,11 @@ export default function Header({
           <Typography className={classes.title} variant="h6" noWrap>
             Gâteau Tunisien
           </Typography>
+          <Link to="/" className={classes.home}>
+              <Badge badgeContent={cartItems.length} color="secondary">
+                  <Home />
+              </Badge>
+            </Link>
           <Route
             render={({ history }) => (
               <SearchBox history={history}></SearchBox>
@@ -203,16 +216,11 @@ export default function Header({
               ) : (
                 <Link to="/signin">Connexion</Link>
               )}
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            {/* <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
           </div>
           <div className={classes.sectionMobile}>
             <Link to="/cart">
