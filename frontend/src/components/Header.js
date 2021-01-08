@@ -105,42 +105,37 @@ export default function Header({
     >
       {userInfo ? (
       <>
-      <MenuItem>
-        <NotificationsIcon />
-        <Link to="/orderhistory">Historique de commande</Link>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
+        <MenuItem>
+          <NotificationsIcon />
+          <Link to="/orderhistory">Historique de commande</Link>
+        </MenuItem>
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+        </MenuItem>
         <MenuItem to="/profile">Profil</MenuItem>
-        {userInfo.isSeller && <Button
-                href="#admin"
-                style={{ fontSize: "inherit", fontFamilly: "inherit", textTransform: "inherit" }}
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                Vendeur
-              </Button>}
+        {userInfo.isSeller && <><MenuItem onClick={handleMenuClose}>
+            <Link to="/productlist/seller">Produits de Vendeur</Link>
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <Link to="/orderlist/seller">Commandes de Vendeur</Link>
+        </MenuItem></>}
 
-              {userInfo.isSeller && <>
-                <MenuItem to="/dashboard">Dashboard</MenuItem>
-                <MenuItem to="/productlist">Produits</MenuItem>
-                <MenuItem to="/orderlist">Commandes</MenuItem>
-                <MenuItem to="/userlist">Utilisateurs</MenuItem>
-              </>}
+        {userInfo.isAdmin && <>
+          <MenuItem to="/dashboard">Dashboard</MenuItem>
+          <MenuItem to="/productlist">Produits</MenuItem>
+          <MenuItem to="/orderlist">Commandes</MenuItem>
+          <MenuItem to="/userlist">Utilisateurs</MenuItem>
+      </>}
 
-              <MenuItem to="#signout" onClick={signoutHandler}>
-                Déconnexion
-              </MenuItem>
+      <MenuItem to="#signout" onClick={signoutHandler}>
+        Déconnexion
       </MenuItem>
       </>
       ) : (
@@ -172,11 +167,11 @@ export default function Header({
           ></Route>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <Link to="/cart">
-              Panier
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
+            <Link to="/cart">
+                Panier
+                {cartItems.length > 0 && (
+                  <span className="badge">{cartItems.length}</span>
+                )}
             </Link>
             {userInfo ? (
               <>
@@ -194,7 +189,7 @@ export default function Header({
                 Vendeur
               </Button>}
 
-              {userInfo.isSeller && <>
+              {userInfo.isAdmin && <>
                 <Link to="/dashboard">Dashboard</Link>
                 <Link to="/productlist">Produits</Link>
                 <Link to="/orderlist">Commandes</Link>
@@ -225,11 +220,6 @@ export default function Header({
                   <ShoppingCartIcon />
               </Badge>
             </Link>
-            {userInfo ? (
-              <Link to="/profile"><AccountCircle /></Link>
-              ) : (
-                <Link to="/signin"><LockOpenIcon /></Link>
-              )}
             <IconButton
               aria-label="show more"
               aria-controls={mobileMenuId}
