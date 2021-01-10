@@ -63,10 +63,10 @@ export default function MapScreen(props) {
         payload: {
           lat: location.lat,
           lng: location.lng,
-          address: places[0].postal_code,
+          address: places[0].address_components[6].long_name,
           name: places[0].name,
           vicinity: places[0].vicinity,
-          googleAddressId: places[0].id,
+          googleAddressId: places[0].address_components[5].long_name,
         },
       });
       // alert('Emplacement sélectionné avec succès.');

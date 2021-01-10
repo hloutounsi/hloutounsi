@@ -29,6 +29,7 @@ export default function ShippingAddressScreen(props) {
       setAddress(addressMap.name);
       setCity(addressMap.vicinity);
       setPostalCode(addressMap.address);
+      setCountry(addressMap.googleAddressId);
     }
   }, []);
 
