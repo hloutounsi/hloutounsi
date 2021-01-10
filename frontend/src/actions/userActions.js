@@ -1,6 +1,5 @@
 import Axios from 'axios';
 import {
-  USER_ADDRESS_MAP_CONFIRM,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
@@ -179,23 +178,5 @@ export const listTopSellers = () => async (dispatch) => {
         : error.message;
     dispatch({ type: USER_TOPSELLERS_LIST_FAIL, payload: message });
   }
-};
-
-export const saveAdressInfo = (places, location) => async (dispatch, getState) => {
-  dispatch({
-    type: USER_ADDRESS_MAP_CONFIRM,
-    payload: {
-      lat: location.lat,
-      lng: location.lng,
-      address: places[0].formatted_address,
-      name: places[0].name,
-      vicinity: places[0].vicinity,
-      googleAddressId: places[0].id,
-    },
-  });
-  localStorage.setItem(
-    'shippingAddress',
-    JSON.stringify(getState().userAddressMap.address)
-  );
 };
 

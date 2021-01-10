@@ -30,6 +30,7 @@ export default function ShippingAddressScreen(props) {
     if (addressMap) {
       setLat(addressMap.lat);
       setLng(addressMap.lng);
+      setAddress(addressMap.name);
     }
     let moveOn = true;
     if (!newLat || !newLng) {
