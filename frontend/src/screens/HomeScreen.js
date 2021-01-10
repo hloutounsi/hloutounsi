@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
+import Grid from '@material-ui/core/Grid';
 import Product from '../components/Product';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -26,7 +27,8 @@ export default function HomeScreen() {
     dispatch(listTopSellers());
   }, [dispatch]);
   return (
-    <div>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
       <h2>Meilleures ventes</h2>
       {loadingSellers ? (
         <LoadingBox></LoadingBox>
@@ -47,6 +49,8 @@ export default function HomeScreen() {
           </Carousel>
         </>
       )}
+      </Grid>
+      <Grid item xs={12}>
       <h2>Produits populaires</h2>
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -62,6 +66,7 @@ export default function HomeScreen() {
           </div>
         </>
       )}
-    </div>
+      </Grid>
+    </Grid>
   );
 }

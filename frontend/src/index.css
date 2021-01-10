@@ -31,7 +31,7 @@ header {
 }
 main {
   grid-area: main;
-  padding: 1rem;
+  padding: 2rem 1rem 1rem 1rem;
 }
 footer {
   grid-area: footer;
@@ -68,7 +68,7 @@ textarea,
 button {
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 0.1rem #B3F75D solid;
+  border: 0.1rem #F8EBC0 solid;
   font-size: 1.6rem;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -85,7 +85,7 @@ button:hover {
   border: 0.1rem #fff solid;
 }
 button.primary {
-  background-color: #4F7A48;
+  background-color: #BB1918;
   color: #fff;
 }
 button.block {
@@ -96,11 +96,11 @@ button.small {
 }
 /* Header */
 header a {
-  color: #ffffff;
+  color: #F8EBC0;
   padding: 1rem;
 }
 a.brand {
-  color: #ffffff;
+  color: #F8EBC0;
   font-size: 3rem;
   font-weight: bold;
 }
@@ -322,7 +322,7 @@ img.large {
 .search input {
   border-radius: 0.5rem 0 0 0.5rem;
   border-right: none;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
 }
 .active {
   font-weight: bold;

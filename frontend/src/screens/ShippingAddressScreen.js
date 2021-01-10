@@ -71,10 +71,10 @@ export default function ShippingAddressScreen(props) {
       <CheckoutSteps step1 step2></CheckoutSteps>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Shipping Address</h1>
+          <h1>Adresse de livraison</h1>
         </div>
         <div>
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="fullName">Nom et prénom</label>
           <input
             type="text"
             id="fullName"
@@ -85,7 +85,7 @@ export default function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="address">Address</label>
+          <label htmlFor="address">Adresse</label>
           <input
             type="text"
             id="address"
@@ -96,7 +96,7 @@ export default function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="city">City</label>
+          <label htmlFor="city">Ville</label>
           <input
             type="text"
             id="city"
@@ -107,7 +107,7 @@ export default function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="postalCode">Postal Code</label>
+          <label htmlFor="postalCode">Code Postal</label>
           <input
             type="text"
             id="postalCode"
@@ -118,7 +118,7 @@ export default function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="country">Country</label>
+          <label htmlFor="country">Paye</label>
           <input
             type="text"
             id="country"
@@ -131,13 +131,13 @@ export default function ShippingAddressScreen(props) {
         <div>
           <label htmlFor="chooseOnMap">Location</label>
           <button type="button" onClick={chooseOnMap}>
-            Choose On Map
+            Choisissez sur la carte
           </button>
         </div>
         <div>
           <label />
           <button className="primary" type="submit">
-            Continue
+            Continuez
           </button>
         </div>
       </form>

@@ -19,7 +19,7 @@ export default function PlaceOrderScreen(props) {
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
   cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.taxPrice = toPrice(0.20 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
@@ -114,7 +114,7 @@ export default function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>
-                    <strong>Totale</strong>
+                    <strong>Total</strong>
                   </div>
                   <div>
                     <strong>{cart.totalPrice.toFixed(2)}€</strong>

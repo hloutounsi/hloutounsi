@@ -1,35 +1,41 @@
 {
-  "name": "amazona",
+  "name": "hloutounsi",
   "type": "module",
   "version": "1.0.0",
   "description": "Ecommerce website like amazon",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+    "start": "nodemon --watch backend --exec babel-node backend/server.js",
+    "build": "rm -rf dist && babel backend -d dist  && cd frontend && npm install && npm run build",
+    "heroku-postbuild-x": "npm run build && cd frontend && npm install && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/basir/amazona.git"
+    "url": "git+https://github.com/hloutounsi/hloutounsi.git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/basir/amazona/issues"
-  },
-  "homepage": "https://github.com/basir/amazona#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
+    "eslint-plugin-react": "^7.21.2",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.7",
+    "mongoose": "^5.9.14",
     "multer": "^1.4.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "eslint": "^7.9.0",
-    "eslint-plugin-react": "^7.21.2",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
     "nodemon": "^2.0.4"
   },
   "engines": {

@@ -77,26 +77,26 @@ export default function OrderScreen(props) {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
-      <h1>Order {order._id}</h1>
+      <h1>Commande {order._id}</h1>
       <div className="row top">
         <div className="col-2">
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Shippring</h2>
+                <h2>Livraison</h2>
                 <p>
-                  <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {order.shippingAddress.address},
+                  <strong>Nom:</strong> {order.shippingAddress.fullName} <br />
+                  <strong>Adresse: </strong> {order.shippingAddress.address},
                   {order.shippingAddress.city},{' '}
                   {order.shippingAddress.postalCode},
                   {order.shippingAddress.country}
                 </p>
                 {order.isDelivered ? (
                   <MessageBox variant="success">
-                    Delivered at {order.deliveredAt}
+                    Livré à {order.deliveredAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">Not Delivered</MessageBox>
+                  <MessageBox variant="danger">Non livrés</MessageBox>
                 )}
               </div>
             </li>
@@ -173,7 +173,7 @@ export default function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>
-                    <strong>Totale</strong>
+                    <strong>Total</strong>
                   </div>
                   <div>
                     <strong>{order.totalPrice.toFixed(2)}‎€</strong>
