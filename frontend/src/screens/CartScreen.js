@@ -72,7 +72,7 @@ export default function CartScreen(props) {
                       type="button"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
-                      Delete
+                      Supprimer
                     </button>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ export default function CartScreen(props) {
           <ul>
             <li>
               <h2>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
+                Total hors taxes ({cartItems.reduce((a, c) => a + c.qty, 0)} produits) : $
                 {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
               </h2>
             </li>
@@ -97,7 +97,7 @@ export default function CartScreen(props) {
                 className="primary block"
                 disabled={cartItems.length === 0}
               >
-                Proceed to Checkout
+                Passer à la caisse
               </button>
             </li>
           </ul>
