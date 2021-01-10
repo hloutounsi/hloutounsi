@@ -9,6 +9,7 @@ import LoadingBox from '../components/LoadingBox';
 import Axios from 'axios';
 import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
 import { useDispatch } from 'react-redux';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const libs = ['places'];
 const defaultLocation = { lat: 45.516, lng: -73.56 };
@@ -17,7 +18,7 @@ export default function MapScreen(props) {
   const [googleApiKey, setGoogleApiKey] = useState('');
   const [center, setCenter] = useState(defaultLocation);
   const [location, setLocation] = useState(center);
-
+  const [open, setOpen] = React.useState(false);
   const mapRef = useRef(null);
   const placeRef = useRef(null);
   const markerRef = useRef(null);
@@ -69,11 +70,18 @@ export default function MapScreen(props) {
           googleAddressId: places[0].address_components[5].long_name,
         },
       });
-      // alert('Emplacement sélectionné avec succès.');
+      setOpen(true);
       props.history.push('/shipping');
     } else {
       alert('Please enter your address');
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   const getUserCurrentLocation = () => {
@@ -118,6 +126,16 @@ export default function MapScreen(props) {
           <Marker position={location} onLoad={onMarkerLoad}></Marker>
         </GoogleMap>
       </LoadScript>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Emplacement sélectionné avec succès."
+      />
     </div>
   ) : (
     <LoadingBox></LoadingBox>
