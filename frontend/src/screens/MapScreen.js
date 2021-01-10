@@ -6,8 +6,8 @@ import {
   Marker,
 } from '@react-google-maps/api';
 import LoadingBox from '../components/LoadingBox';
+import { saveAdressInfo } from '../actions/cartActions';
 import Axios from 'axios';
-import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
 import { useDispatch } from 'react-redux';
 
 const libs = ['places'];
@@ -56,18 +56,7 @@ export default function MapScreen(props) {
   const onConfirm = () => {
     const places = placeRef.current.getPlaces();
     if (places && places.length === 1) {
-      // dispatch select action
-      dispatch({
-        type: USER_ADDRESS_MAP_CONFIRM,
-        payload: {
-          lat: location.lat,
-          lng: location.lng,
-          address: places[0].formatted_address,
-          name: places[0].name,
-          vicinity: places[0].vicinity,
-          googleAddressId: places[0].id,
-        },
-      });
+      saveAdressInfo(places, location);
       alert('Emplacement sélectionné avec succès.');
       props.history.push('/shipping');
     } else {
