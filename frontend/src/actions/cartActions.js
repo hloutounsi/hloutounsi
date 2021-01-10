@@ -38,24 +38,6 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
   }
 };
 
-export const saveAdressInfo = (places, location) => async (dispatch, getState) => {
-  dispatch({
-    type: USER_ADDRESS_MAP_CONFIRM,
-    payload: {
-      lat: location.lat,
-      lng: location.lng,
-      address: places[0].formatted_address,
-      name: places[0].name,
-      vicinity: places[0].vicinity,
-      googleAddressId: places[0].id,
-    },
-  });
-  localStorage.setItem(
-    'shippingAddress',
-    JSON.stringify(getState().userAddressMap.address)
-  );
-};
-
 export const removeFromCart = (productId) => (dispatch, getState) => {
   dispatch({ type: CART_REMOVE_ITEM, payload: productId });
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));

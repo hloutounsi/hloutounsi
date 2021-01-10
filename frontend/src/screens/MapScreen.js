@@ -6,7 +6,7 @@ import {
   Marker,
 } from '@react-google-maps/api';
 import LoadingBox from '../components/LoadingBox';
-import { saveAdressInfo } from '../actions/cartActions';
+import { saveAdressInfo } from '../actions/userActions';
 import Axios from 'axios';
 import { useDispatch } from 'react-redux';
 
