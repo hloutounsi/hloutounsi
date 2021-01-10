@@ -23,6 +23,13 @@ export default function ShippingAddressScreen(props) {
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (addressMap) {
+      setAddress(addressMap.name);
+    }
+  }, []);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const newLat = addressMap ? addressMap.lat : lat;
@@ -30,7 +37,6 @@ export default function ShippingAddressScreen(props) {
     if (addressMap) {
       setLat(addressMap.lat);
       setLng(addressMap.lng);
-      setAddress(addressMap.name);
     }
     let moveOn = true;
     if (!newLat || !newLng) {
