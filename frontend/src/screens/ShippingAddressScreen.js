@@ -27,6 +27,8 @@ export default function ShippingAddressScreen(props) {
   useEffect(() => {
     if (addressMap) {
       setAddress(addressMap.name);
+      setCity(addressMap.vicinity);
+      setPostalCode(addressMap.address);
     }
   }, []);
 

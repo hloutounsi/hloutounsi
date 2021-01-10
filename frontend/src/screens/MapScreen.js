@@ -55,6 +55,7 @@ export default function MapScreen(props) {
   const dispatch = useDispatch();
   const onConfirm = () => {
     const places = placeRef.current.getPlaces();
+    console.log(places);
     if (places && places.length === 1) {
       // dispatch select action
       dispatch({
@@ -62,7 +63,7 @@ export default function MapScreen(props) {
         payload: {
           lat: location.lat,
           lng: location.lng,
-          address: places[0].formatted_address,
+          address: places[0].postal_code,
           name: places[0].name,
           vicinity: places[0].vicinity,
           googleAddressId: places[0].id,
