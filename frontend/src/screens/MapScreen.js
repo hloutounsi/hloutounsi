@@ -8,7 +8,7 @@ import {
 import LoadingBox from '../components/LoadingBox';
 import Axios from 'axios';
 import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const libs = ['places'];
 const defaultLocation = { lat: 45.516, lng: -73.56 };
@@ -68,9 +68,10 @@ export default function MapScreen(props) {
           googleAddressId: places[0].id,
         },
       });
+      const userAddressMap = useSelector((state) => state.userAddressMap);
       localStorage.setItem(
         'shippingAddress',
-        JSON.stringify(getState().userAddressMap.address)
+        JSON.stringify(userAddressMap.address)
       );
       alert('location selected successfully.');
       props.history.push('/shipping');
