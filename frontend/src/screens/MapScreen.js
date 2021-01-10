@@ -68,7 +68,7 @@ export default function MapScreen(props) {
           googleAddressId: places[0].id,
         },
       });
-      alert('Emplacement sélectionné avec succès.');
+      // alert('Emplacement sélectionné avec succès.');
       props.history.push('/shipping');
     } else {
       alert('Please enter your address');
