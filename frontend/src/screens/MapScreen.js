@@ -71,9 +71,9 @@ export default function MapScreen(props) {
         },
       });
       setOpen(true);
-      props.history.push('/shipping');
+      setTimeout(() => props.history.push('/shipping'), 3000);
     } else {
-      alert('Please enter your address');
+      alert('Veuillez entrer votre adresse');
     }
   };
 

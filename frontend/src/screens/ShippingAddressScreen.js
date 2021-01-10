@@ -128,7 +128,7 @@ export default function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="country">Paye</label>
+          <label htmlFor="country">Pays</label>
           <input
             type="text"
             id="country"
