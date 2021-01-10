@@ -10,6 +10,11 @@ import Axios from 'axios';
 import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
 import { useDispatch } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const libs = ['places'];
 const defaultLocation = { lat: 45.516, lng: -73.56 };
@@ -71,7 +76,7 @@ export default function MapScreen(props) {
         },
       });
       setOpen(true);
-      setTimeout(() => props.history.push('/shipping'), 3000);
+      setTimeout(() => props.history.push('/shipping'), 2000);
     } else {
       alert('Veuillez entrer votre adresse');
     }
@@ -128,14 +133,17 @@ export default function MapScreen(props) {
       </LoadScript>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Emplacement sélectionné avec succès."
-      />
+      >
+        <Alert onClose={handleClose} severity="success">
+          Emplacement sélectionné avec succès.
+        </Alert>
+      </Snackbar>
     </div>
   ) : (
     <LoadingBox></LoadingBox>
