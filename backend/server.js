@@ -21,7 +21,7 @@ mongoose
 const app = express();
 // const __dirname = path.resolve();
 app.use(bodyParser.json());
-app.post('/api/send', (req, res) => {
+app.use('/api/send', (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
     <h3>Contact Details</h3>
