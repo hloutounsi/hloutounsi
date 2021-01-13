@@ -21,26 +21,17 @@ mongoose
 const app = express();
 // const __dirname = path.resolve();
 app.use(bodyParser.json());
-app.use('/api/uploads', uploadRoute);
-app.use('/api/users', userRoute);
-app.use('/api/products', productRoute);
-app.use('/api/orders', orderRoute);
-app.get('/api/config/paypal', (req, res) => {
-  res.send(config.PAYPAL_CLIENT_ID);
-});
-app.get('/api/config/google', (req, res) => {
-  res.send(config.GOOGLE_API_KEY);
-});
-app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
-app.use(express.static(path.join(__dirname, '/../frontend/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
-});
-var emailRouter = express.Router();
-emailRouter.get('/api/send', (req, res) => {
+app.post('/api/send', (req, res) => {
   const output = `
-    <p>You have a new contact request</p>
+    <p>Nouveau demande de contact</p>
     <h3>Contact Details</h3>
+    <ul>  
+    <li>Nom: ${req.body.name}</li>
+    <li>Sujet: ${req.body.subject}</li>
+    <li>Email: ${req.body.email}</li>
+    </ul>
+    <h3>Message</h3>
+    <p>${req.body.message}</p>
   `;
 
   // create reusable transporter object using the default SMTP transport
@@ -74,6 +65,21 @@ emailRouter.get('/api/send', (req, res) => {
 
     res.send('Email has been sent');
   });
+});
+app.use('/api/uploads', uploadRoute);
+app.use('/api/users', userRoute);
+app.use('/api/products', productRoute);
+app.use('/api/orders', orderRoute);
+app.get('/api/config/paypal', (req, res) => {
+  res.send(config.PAYPAL_CLIENT_ID);
+});
+app.get('/api/config/google', (req, res) => {
+  res.send(config.GOOGLE_API_KEY);
+});
+app.use('/uploads', express.static(path.join('C:/hloutounsi/uploads')));
+app.use(express.static(path.join('C:/hloutounsi/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join('C:/hloutounsi/frontend/build/index.html'));
 });
 
 app.listen(config.PORT, () => {
