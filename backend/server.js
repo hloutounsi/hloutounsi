@@ -21,7 +21,7 @@ mongoose
 const app = express();
 // const __dirname = path.resolve();
 app.use(bodyParser.json());
-app.use('/api/send', (req, res) => {
+app.post('/api/send', async (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
     <h3>Contact Details</h3>
@@ -56,7 +56,7 @@ app.use('/api/send', (req, res) => {
   };
 
   // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
+  await transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
         return console.log(error);
     }

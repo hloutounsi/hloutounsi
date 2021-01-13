@@ -61,7 +61,7 @@ resetForm = () => {
     };
 
     try {
-      await axios.get("api/send", data);
+      await axios.post("api/send", data);
       this.setState({ sent: true }, this.resetForm());
     } catch (error) {
       console.log(error);
