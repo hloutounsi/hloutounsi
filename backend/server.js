@@ -36,8 +36,8 @@ app.use(express.static(path.join(__dirname, '/../frontend/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
 });
-
-app.get('/api/send', (req, res) => {
+var emailRouter = express.Router();
+emailRouter.get('/api/send', (req, res) => {
   const output = `
     <p>You have a new contact request</p>
     <h3>Contact Details</h3>
@@ -72,7 +72,7 @@ app.get('/api/send', (req, res) => {
     console.log('Message sent: %s', info.messageId);   
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-    res.send('contact', {msg:'Email has been sent'});
+    res.send('Email has been sent');
   });
 });
 
