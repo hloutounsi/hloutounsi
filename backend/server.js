@@ -57,7 +57,7 @@ app.get('/send', (req, res) => {
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: 'hloutounsi2@gmail.com', // sender address
+    from: config.EMAIL, // sender address
     to: 'medbbelaid@gmail.com', // list of receivers
     subject: 'Node Contact Request', // Subject line
     text: 'Hello world?', // plain text body
@@ -72,7 +72,7 @@ app.get('/send', (req, res) => {
     console.log('Message sent: %s', info.messageId);   
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-    res.render('contact', {msg:'Email has been sent'});
+    res.send('contact', {msg:'Email has been sent'});
   });
 });
 
