@@ -37,7 +37,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
 });
 
-app.post('/send', (req, res) => {
+app.get('/send', (req, res) => {
   const output = `
     <p>You have a new contact request</p>
     <h3>Contact Details</h3>
