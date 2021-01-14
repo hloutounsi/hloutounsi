@@ -140,7 +140,7 @@ export default function MapScreen(props) {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="success">
+        <Alert onClose={handleClose} severity="success" style={{ fontSize: "inherit" }}>
           Emplacement sélectionné avec succès.
         </Alert>
       </Snackbar>

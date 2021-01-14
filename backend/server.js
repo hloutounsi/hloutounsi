@@ -19,7 +19,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 app.use(bodyParser.json());
 app.post('/api/send', async (req, res) => {
   const output = `
@@ -76,10 +76,10 @@ app.get('/api/config/paypal', (req, res) => {
 app.get('/api/config/google', (req, res) => {
   res.send(config.GOOGLE_API_KEY);
 });
-app.use('/uploads', express.static(path.join(__dirname, 'C:/hloutounsi/../uploads')));
-app.use(express.static(path.join(__dirname, '/../frontend/build')));
+app.use('/uploads', express.static(path.join('C:/hloutounsi/uploads')));
+app.use(express.static(path.join(__dirname, 'C:hloutounsi/frontend/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
+  res.sendFile(path.join('C:hloutounsi/frontend/build/index.html'));
 });
 
 app.listen(config.PORT, () => {

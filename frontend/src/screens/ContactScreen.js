@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
+import Alert from '@material-ui/lab/Alert';
 
 export default class Contact extends Component {
   state = {
@@ -61,7 +62,7 @@ resetForm = () => {
     };
 
     try {
-      await axios.post("api/send", data);
+      await axios.post("api/send", data)
       this.setState({ sent: true }, this.resetForm());
     } catch (error) {
       console.log(error);
@@ -70,11 +71,14 @@ resetForm = () => {
   render() {
     return (
         <form className="contact-form" onSubmit={(e) => this.formSubmit(e)}>
+          {this.state.sent && <Alert style={{ fontSize: "inherit" }} severity="success">
+            Merci, votre message a bien été envoyé à notre service client!
+          </Alert>}
         <h1>Contactez nous</h1>
         <TextField
           id="outlined-basic"
           placeholder="Enter Subject"
-          label="Subject"
+          label="Sujet"
           variant="outlined"
           value={this.state.subject}
           onChange={(e) => this.setState({ subject: e.target.value })}
@@ -88,7 +92,7 @@ resetForm = () => {
         <TextField
           id="outlined-basic"
           placeholder="Enter your name"
-          label="Name"
+          label="Nom"
           variant="outlined"
           value={this.state.name}
           onChange={(e) => this.setState({ name: e.target.value })}
@@ -121,6 +125,7 @@ resetForm = () => {
           placeholder="Enter Message"
           variant="outlined"
           multiline
+          rowsMin={3}
           rowsMax={4}
           value={this.state.message}
           onChange={(e) => this.setState({ message: e.target.value })}

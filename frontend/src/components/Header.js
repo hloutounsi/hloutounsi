@@ -243,6 +243,7 @@ export default function Header({
                   <span className="badge">{cartItems.length}</span>
                 )}
             </Link>
+            <Link to="/contact">Contactez nous</Link>
             {userInfo ? (
               <>
               <Link to="/profile">Profil</Link>
