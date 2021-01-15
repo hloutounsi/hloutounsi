@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
@@ -22,6 +25,10 @@ export default function ShippingAddressScreen(props) {
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
+  const [state, setState] = React.useState({
+    checkedA: false,
+    checkedB: false,
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +39,11 @@ export default function ShippingAddressScreen(props) {
       setCountry(addressMap.googleAddressId);
     }
   }, []);
+
+  const handleChange = (event) => {
+    if(event.target.name === "checkedA") setState({ checkedB:false, checkedA: true });
+    if(event.target.name === "checkedB") setState({ checkedA:false, checkedB: true });
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -81,8 +93,38 @@ export default function ShippingAddressScreen(props) {
       <CheckoutSteps step1 step2></CheckoutSteps>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Adresse de livraison</h1>
+          <h1>Méthode de livraison</h1>
         </div>
+        <FormGroup row>
+          <FormControlLabel
+          control={
+            <Checkbox
+              checked={state.checkedA}
+              onChange={handleChange}
+              name="checkedA"
+              color="primary"
+            />
+            }
+            label="Livraison à domicile 9 €"
+          />
+          <FormControlLabel
+            control={
+            <Checkbox
+              checked={state.checkedB}
+              onChange={handleChange}
+              name="checkedB"
+              color="primary"
+            />
+          }
+          label="Livraison en point relais UPS 6 €"
+        />
+        </FormGroup>
+        {state.checkedA && <div>
+          <label htmlFor="chooseOnMap">Location</label>
+          <button type="button" onClick={chooseOnMap}>
+            Choisissez sur la carte
+          </button>
+        </div>}
         <div>
           <label htmlFor="fullName">Nom et prénom</label>
           <input
@@ -137,12 +179,6 @@ export default function ShippingAddressScreen(props) {
             onChange={(e) => setCountry(e.target.value)}
             required
           ></input>
-        </div>
-        <div>
-          <label htmlFor="chooseOnMap">Location</label>
-          <button type="button" onClick={chooseOnMap}>
-            Choisissez sur la carte
-          </button>
         </div>
         <div>
           <label />
