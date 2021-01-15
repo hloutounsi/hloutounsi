@@ -19,8 +19,24 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 app.use(bodyParser.json());
+app.use('/api/uploads', uploadRoute);
+app.use('/api/users', userRoute);
+app.use('/api/products', productRoute);
+app.use('/api/orders', orderRoute);
+app.get('/api/config/paypal', (req, res) => {
+  res.send(config.PAYPAL_CLIENT_ID);
+});
+app.get('/api/config/google', (req, res) => {
+  res.send(config.GOOGLE_API_KEY);
+});
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+);
+
 app.post('/api/send', async (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
@@ -65,21 +81,6 @@ app.post('/api/send', async (req, res) => {
 
     res.send('Email has been sent');
   });
-});
-app.use('/api/uploads', uploadRoute);
-app.use('/api/users', userRoute);
-app.use('/api/products', productRoute);
-app.use('/api/orders', orderRoute);
-app.get('/api/config/paypal', (req, res) => {
-  res.send(config.PAYPAL_CLIENT_ID);
-});
-app.get('/api/config/google', (req, res) => {
-  res.send(config.GOOGLE_API_KEY);
-});
-app.use('/uploads', express.static(path.join('/../uploads')));
-app.use(express.static(path.join(__dirname, '/../frontend/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join('C:/hloutounsi/frontend/build/index.html'));
 });
 
 app.listen(config.PORT, () => {
