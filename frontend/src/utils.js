@@ -41,3 +41,7 @@ export const ratings = [
     rating: 1,
   },
 ];
+ export const getPrice = (items) => {
+  const toPrice = (num) => Number(num.toFixed(2));
+  return toPrice(items.reduce((a, c) => a + c.qty * c.price, 0));
+ }

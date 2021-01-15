@@ -69,12 +69,9 @@ export default function CartScreen(props) {
                   </div>
                   <div>{item.price}‎€</div>
                   <div>
-                    <button
-                      type="button"
-                      onClick={() => removeFromCartHandler(item.product)}
-                    >
+                    <Button variant="contained" color="secondary" onClick={() => removeFromCartHandler(item.product)}>
                       Supprimer
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </li>
@@ -87,7 +84,7 @@ export default function CartScreen(props) {
           <ul>
             <li>
               <h2>
-                Total hors taxes ({cartItems.reduce((a, c) => a + c.qty, 0)} produits) :
+                Total TTC ({cartItems.reduce((a, c) => a + c.qty, 0)} produits) :
                 {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}€
               </h2>
             </li>
