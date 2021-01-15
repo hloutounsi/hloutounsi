@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
+import InfoIcon from '@material-ui/icons/Info';
 
+import { getPrice } from '../utils';
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
@@ -28,10 +31,16 @@ export default function ShippingAddressScreen(props) {
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     checkedA: false,
     checkedB: false,
   });
+  const [isFree, setIsFree] = useState({
+    relayPoint: false,
+    home: false
+  });
+  const [shippingPrice, setShippingPrice] = useState(0);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,7 +50,17 @@ export default function ShippingAddressScreen(props) {
       setPostalCode(addressMap.address);
       setCountry(addressMap.googleAddressId);
     }
-  }, []);
+    if(getPrice(cart.cartItems) < 40) {
+      setIsFree({relayPoint: false, home: false})
+      setShippingPrice(state.checkedA ? 9 : 6);
+    } else if(getPrice(cart.cartItems) < 80 && getPrice(cart.cartItems) >= 40) {
+      setIsFree({relayPoint: true, home: false})
+      setShippingPrice(state.checkedA ? 9 : 0);
+    } else {
+      setIsFree({relayPoint: true, home: true})
+      setShippingPrice(state.checkedA ? 0 : 0);
+    }
+  }, [state.checkedA, state.checkedB]);
 
   const handleChange = (event) => {
     if(event.target.name === "checkedA") setState({ checkedB:false, checkedA: true });
@@ -72,7 +91,8 @@ export default function ShippingAddressScreen(props) {
           country,
           lat: newLat,
           lng: newLng,
-          type: state.checkedA
+          type: state.checkedA,
+          shippingPrice
         })
       );
       props.history.push('/payment');
@@ -88,11 +108,13 @@ export default function ShippingAddressScreen(props) {
         country,
         lat,
         lng,
-        type: state.checkedA
+        type: state.checkedA,
+        shippingPrice
       })
     );
     props.history.push('/map');
   };
+  const price = getPrice(cart.cartItems);
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -100,6 +122,12 @@ export default function ShippingAddressScreen(props) {
         <div>
           <h1>Méthode de livraison</h1>
         </div>
+        {!isFree.home && <div style={{ backgroundColor: "#E09804", color: "#fff", paddingLeft: 10, fontSize: "2rem" }}>
+          <p><InfoIcon style={{ fontSize: 50, float: "left", marginRight: 15 }} />
+          {price < 40 && `Il vous reste ${40 - price}€ pour avoir une livraison gratuite en point relais et ${80 - price}€ à domicile `}
+          {(price >= 40 && state.checkedA) && `Il vous reste ${80 - price}€ pour avoir une livraison gratuite à domicile `}
+          {(price < 40 || (price >= 40 && state.checkedA)) && <Link to="/">Aller faire les courses</Link>}</p>
+        </div>}
         <FormGroup row>
           <FormControlLabel
           control={

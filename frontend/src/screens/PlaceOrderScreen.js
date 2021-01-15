@@ -7,6 +7,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { getPrice } from '../utils';
 
 export default function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -15,13 +16,9 @@ export default function PlaceOrderScreen(props) {
   }
   const orderCreate = useSelector((state) => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
-  const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-  cart.itemsPrice = toPrice(
-    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
-  );
-  cart.shippingPrice = cart.itemsPrice > 70 ? toPrice(0) : toPrice(cart.shippingAddress.type ? 9 : 6);
-  cart.taxPrice = toPrice(0.20 * cart.itemsPrice);
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+  cart.itemsPrice = getPrice(cart.cartItems);
+  cart.shippingPrice = cart.shippingAddress.shippingPrice;
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
@@ -40,7 +37,7 @@ export default function PlaceOrderScreen(props) {
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Livraison</h2>
+                <h2>Méthode de Livraison {cart.shippingAddress.type ? "à domicile" : "en point relais"}</h2>
                 <p>
                   <strong>Nom:</strong> {cart.shippingAddress.fullName} <br />
                   <strong>Adresse: </strong> {cart.shippingAddress.address},
@@ -104,12 +101,6 @@ export default function PlaceOrderScreen(props) {
                 <div className="row">
                   <div>Livraison</div>
                   <div>{cart.shippingPrice.toFixed(2)}€</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Taxe</div>
-                  <div>{cart.taxPrice.toFixed(2)}€</div>
                 </div>
               </li>
               <li>

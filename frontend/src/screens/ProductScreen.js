@@ -136,7 +136,7 @@ export default function ProductScreen(props) {
                                   </option>
                                 )
                               )}
-                            </select>
+                            </select> KG
                           </div>
                         </div>
                       </li>
