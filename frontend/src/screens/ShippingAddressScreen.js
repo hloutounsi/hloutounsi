@@ -53,7 +53,7 @@ export default function ShippingAddressScreen(props) {
     if(getPrice(cart.cartItems) < 40) {
       setIsFree({relayPoint: false, home: false})
       setShippingPrice(state.checkedA ? 9 : 6);
-    } else if(getPrice(cart.cartItems) < 80 && getPrice(cart.cartItems) >= 40) {
+    } else if(getPrice(cart.cartItems) < 70 && getPrice(cart.cartItems) >= 40) {
       setIsFree({relayPoint: true, home: false})
       setShippingPrice(state.checkedA ? 9 : 0);
     } else {
@@ -122,10 +122,10 @@ export default function ShippingAddressScreen(props) {
         <div>
           <h1>Méthode de livraison</h1>
         </div>
-        {!isFree.home && <div style={{ backgroundColor: "#E09804", color: "#fff", paddingLeft: 10, fontSize: "2rem" }}>
+        {(!isFree.home && ((price >= 40 && state.checkedA) || price < 40)) && <div style={{ backgroundColor: "#E09704", color: "#fff", paddingLeft: 10, fontSize: "2rem" }}>
           <p><InfoIcon style={{ fontSize: 50, float: "left", marginRight: 15 }} />
-          {price < 40 && `Il vous reste ${40 - price}€ pour avoir une livraison gratuite en point relais et ${80 - price}€ à domicile `}
-          {(price >= 40 && state.checkedA) && `Il vous reste ${80 - price}€ pour avoir une livraison gratuite à domicile `}
+          {price < 40 && `Il vous reste ${40 - price}€ pour avoir une livraison gratuite en point relais et ${70 - price}€ à domicile `}
+          {(price >= 40 && state.checkedA) && `Il vous reste ${70 - price}€ pour avoir une livraison gratuite à domicile `}
           {(price < 40 || (price >= 40 && state.checkedA)) && <Link to="/">Aller faire les courses</Link>}</p>
         </div>}
         <FormGroup row>
@@ -138,7 +138,7 @@ export default function ShippingAddressScreen(props) {
               color="primary"
             />
             }
-            label="Livraison à domicile 9 €"
+            label={`Livraison à domicile ${price < 70 ? 9 : 0}€`}
           />
           <FormControlLabel
             control={
@@ -149,7 +149,7 @@ export default function ShippingAddressScreen(props) {
               color="primary"
             />
           }
-          label="Livraison en point relais UPS 6 €"
+          label={`Livraison en point relais UPS ${price < 40 ? 6 : 0}€`}
         />
         </FormGroup>
         {state.checkedB && <div>
