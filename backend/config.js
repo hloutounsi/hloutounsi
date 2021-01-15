@@ -10,4 +10,6 @@ export default {
   GOOGLE_API_KEY: process.env.GOOGLE_API_KEY || 'google api key',
   accessKeyId: process.env.accessKeyId || 'accessKeyId',
   secretAccessKey: process.env.secretAccessKey || 'secretAccessKey',
+  EMAIL: process.env.EMAIL || 'hloutounsi2@gmail.com',
+  PASSWORD_EMAIL: process.env.PASSWORD_EMAIL || 'email password',
 };

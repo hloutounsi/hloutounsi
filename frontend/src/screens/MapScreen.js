@@ -8,7 +8,13 @@ import {
 import LoadingBox from '../components/LoadingBox';
 import Axios from 'axios';
 import { USER_ADDRESS_MAP_CONFIRM } from '../constants/userConstants';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const libs = ['places'];
 const defaultLocation = { lat: 45.516, lng: -73.56 };
@@ -17,7 +23,7 @@ export default function MapScreen(props) {
   const [googleApiKey, setGoogleApiKey] = useState('');
   const [center, setCenter] = useState(defaultLocation);
   const [location, setLocation] = useState(center);
-
+  const [open, setOpen] = React.useState(false);
   const mapRef = useRef(null);
   const placeRef = useRef(null);
   const markerRef = useRef(null);
@@ -55,6 +61,7 @@ export default function MapScreen(props) {
   const dispatch = useDispatch();
   const onConfirm = () => {
     const places = placeRef.current.getPlaces();
+    console.log(places);
     if (places && places.length === 1) {
       // dispatch select action
       dispatch({
@@ -62,22 +69,24 @@ export default function MapScreen(props) {
         payload: {
           lat: location.lat,
           lng: location.lng,
-          address: places[0].formatted_address,
+          address: places[0].address_components[6].long_name,
           name: places[0].name,
           vicinity: places[0].vicinity,
-          googleAddressId: places[0].id,
+          googleAddressId: places[0].address_components[5].long_name,
         },
       });
-      const userAddressMap = useSelector((state) => state.userAddressMap);
-      localStorage.setItem(
-        'shippingAddress',
-        JSON.stringify(userAddressMap.address)
-      );
-      alert('location selected successfully.');
-      props.history.push('/shipping');
+      setOpen(true);
+      setTimeout(() => props.history.push('/shipping'), 2000);
     } else {
-      alert('Please enter your address');
+      alert('Veuillez entrer votre adresse');
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   const getUserCurrentLocation = () => {
@@ -122,6 +131,19 @@ export default function MapScreen(props) {
           <Marker position={location} onLoad={onMarkerLoad}></Marker>
         </GoogleMap>
       </LoadScript>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success" style={{ fontSize: "inherit" }}>
+          Emplacement sélectionné avec succès.
+        </Alert>
+      </Snackbar>
     </div>
   ) : (
     <LoadingBox></LoadingBox>
