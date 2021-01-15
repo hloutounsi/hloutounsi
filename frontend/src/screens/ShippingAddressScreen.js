@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import TextField from "@material-ui/core/TextField";
+
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
@@ -54,9 +57,9 @@ export default function ShippingAddressScreen(props) {
       setLng(addressMap.lng);
     }
     let moveOn = true;
-    if (!newLat || !newLng) {
+    if ((!newLat || !newLng) && state.checkedA) {
       moveOn = window.confirm(
-        'You did not set your location on map. Continue?'
+        'Vous n\'avez pas défini votre position sur la carte. Continuer?'
       );
     }
     if (moveOn) {
@@ -69,6 +72,7 @@ export default function ShippingAddressScreen(props) {
           country,
           lat: newLat,
           lng: newLng,
+          type: state.checkedA
         })
       );
       props.history.push('/payment');
@@ -84,6 +88,7 @@ export default function ShippingAddressScreen(props) {
         country,
         lat,
         lng,
+        type: state.checkedA
       })
     );
     props.history.push('/map');
@@ -119,72 +124,77 @@ export default function ShippingAddressScreen(props) {
           label="Livraison en point relais UPS 6 €"
         />
         </FormGroup>
+        {state.checkedB && <div>
+          <p>Pour séléctionner l'adresse en point de relais la plus proche de chez-vous, Veuillez cliquer sur ce lien 
+            <a style={{ color: "#e29b2f", backgroundColor: "#3d1901", fontWeight: 700, borderRadius: 5, padding: "1px 3px", margin: 5 }} href="https://www.ups.com/dropoff/" target="white">UPS</a><br/>
+          Et remplir l'adresse complete de point de relais dans les champs au dessous</p>
+        </div>}
         {state.checkedA && <div>
           <label htmlFor="chooseOnMap">Location</label>
-          <button type="button" onClick={chooseOnMap}>
+          <Button onClick={chooseOnMap} color="secondary" variant="contained" style={{ maxWidth: "50%" }}>
             Choisissez sur la carte
-          </button>
+          </Button>
         </div>}
         <div>
-          <label htmlFor="fullName">Nom et prénom</label>
-          <input
-            type="text"
-            id="fullName"
-            placeholder="Enter full name"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          ></input>
+        <TextField
+          type="text"
+          id="fullName"
+          placeholder="Enter full name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+          label="Nom et prénom"
+        />
         </div>
         <div>
-          <label htmlFor="address">Adresse</label>
-          <input
+          <TextField
             type="text"
             id="address"
             placeholder="Enter address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
-          ></input>
+            label="Adresse"
+          />
         </div>
         <div>
-          <label htmlFor="city">Ville</label>
-          <input
+          <TextField
             type="text"
             id="city"
             placeholder="Enter city"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
-          ></input>
+            label="Ville"
+          />
         </div>
         <div>
-          <label htmlFor="postalCode">Code Postal</label>
-          <input
+          <TextField
             type="text"
             id="postalCode"
             placeholder="Enter postal code"
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
             required
-          ></input>
+            label="Code Postal"
+          />
         </div>
         <div>
-          <label htmlFor="country">Pays</label>
-          <input
+          <TextField
             type="text"
             id="country"
             placeholder="Enter country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            value={"France"}
             required
-          ></input>
+            label="Pays"
+            disabled
+          />
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
+          <Button type="submit" color="primary" disabled={!state.checkedA && !state.checkedB} variant="contained">
             Continuez
-          </button>
+          </Button>
         </div>
       </form>
     </div>
