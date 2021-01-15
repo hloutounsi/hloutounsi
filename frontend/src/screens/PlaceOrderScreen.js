@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { createOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
@@ -18,7 +19,7 @@ export default function PlaceOrderScreen(props) {
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
+  cart.shippingPrice = cart.itemsPrice > 70 ? toPrice(0) : toPrice(cart.shippingAddress.type ? 9 : 6);
   cart.taxPrice = toPrice(0.20 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ export default function PlaceOrderScreen(props) {
               </li>
               <li>
                 <div className="row">
-                  <div>Les elements</div>
+                  <div>Produits</div>
                   <div>{cart.itemsPrice.toFixed(2)}€</div>
                 </div>
               </li>
@@ -122,14 +123,15 @@ export default function PlaceOrderScreen(props) {
                 </div>
               </li>
               <li>
-                <button
-                  type="button"
+                <Button
+                  variant="contained"
+                  color="primary"
                   onClick={placeOrderHandler}
-                  className="primary block"
                   disabled={cart.cartItems.length === 0}
+                  style={{ width: "100%" }}
                 >
                   Passer la commande
-                </button>
+                </Button>
               </li>
               {loading && <LoadingBox></LoadingBox>}
               {error && <MessageBox variant="danger">{error}</MessageBox>}

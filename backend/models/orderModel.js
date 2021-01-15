@@ -23,6 +23,7 @@ const orderSchema = new mongoose.Schema(
       country: { type: String, required: true },
       lat: Number,
       lng: Number,
+      type: Boolean,
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {

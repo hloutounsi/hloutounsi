@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import MessageBox from '../components/MessageBox';
 
@@ -91,14 +92,15 @@ export default function CartScreen(props) {
               </h2>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={checkoutHandler}
-                className="primary block"
-                disabled={cartItems.length === 0}
-              >
+            <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={checkoutHandler}
+                  disabled={cartItems.length === 0}
+                  style={{ width: "100%" }}
+                >
                 Passer à la caisse
-              </button>
+              </Button>
             </li>
           </ul>
         </div>
