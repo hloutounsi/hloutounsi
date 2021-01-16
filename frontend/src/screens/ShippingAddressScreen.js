@@ -95,7 +95,7 @@ export default function ShippingAddressScreen(props) {
           shippingPrice
         })
       );
-      props.history.push('/payment');
+      props.history.push('/placeorder');
     }
   };
   const chooseOnMap = () => {
@@ -215,6 +215,7 @@ export default function ShippingAddressScreen(props) {
             value={"France"}
             required
             label="Pays"
+            disabled
           />
         </div>
         <div>
