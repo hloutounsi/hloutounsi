@@ -35,14 +35,18 @@ orderRouter.post(
     if (req.body.orderItems.length === 0) {
       res.status(400).send({ message: 'Panier Vide' });
     } else {
+      const address = req.body.shippingAddress;
+      delete address.shippingPrice;
+      // delete address.type;
+      address.country = "France";
+      console.log(address)
       const order = new Order({
         seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
-        shippingAddress: req.body.shippingAddress,
+        shippingAddress: address,
         paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
-        shippingPrice: 0,
-        taxPrice: req.body.taxPrice,
+        shippingPrice: req.body.shippingPrice,
         totalPrice: req.body.totalPrice,
         user: req.user._id,
       });

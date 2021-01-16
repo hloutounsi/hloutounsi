@@ -215,7 +215,6 @@ export default function ShippingAddressScreen(props) {
             value={"France"}
             required
             label="Pays"
-            disabled
           />
         </div>
         <div>
