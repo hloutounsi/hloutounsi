@@ -35,8 +35,8 @@ app.post('/api/send', async (req, res) => {
     <p>${req.body.message}</p>
   `;
   const outputWelcome = `
-    <div style="padding: 5% 20%">
-    <img src="https://hloutounsi.com/images/logo.png" width=200 />
+    <div style="padding: 3% 20%">
+    <img src="https://hloutounsi.com/images/logo.png" width=300 />
     <h1>Bienvenue Mr. / Mme., ${req.body.name}</h1>
     <p>Nous vous remercions pour votre inscription. À partir de maintenant,
     vous pouvez démarrer une session sur votre profil d'utilisateur en indiquant 

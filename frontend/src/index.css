@@ -65,10 +65,9 @@ ul {
 li {
   margin-top: 1rem;
 }
-input,
+
 select,
 textarea,
-input:hover,
 select:hover,
 textarea:hover {
   border: 0.1rem #fff solid;
@@ -307,11 +306,15 @@ img.large {
   border-radius: 0 0.5rem 0.5rem 0;
   border-right: none;
   margin-right: 0.5rem;
+  border: 1px solid #F8EBC0;
 }
 .search input {
   border-radius: 0.5rem 0 0 0.5rem;
   border-right: none;
-  margin-left: 1rem;
+  height: 1em !important;
+}
+input {
+  height: 1.8em !important;
 }
 .active {
   font-weight: bold;

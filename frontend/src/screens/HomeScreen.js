@@ -14,6 +14,8 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const userTopSellersList = useSelector((state) => state.userTopSellersList);
   const {
@@ -28,7 +30,7 @@ export default function HomeScreen() {
   }, [dispatch]);
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      {userInfo && <Grid item xs={12}>
       <h2>Meilleures ventes</h2>
       {loadingSellers ? (
         <LoadingBox></LoadingBox>
@@ -42,14 +44,14 @@ export default function HomeScreen() {
               <div key={seller._id}>
                 <Link to={`/seller/${seller._id}`}>
                   <img src={seller.seller.logo} alt={seller.seller.name} />
-                  <p className="legend">{seller.seller.name}</p>
+                  <p className="legend">Vendeur {seller.seller.name}</p>
                 </Link>
               </div>
             ))}
           </Carousel>
         </>
       )}
-      </Grid>
+      </Grid>}
       <Grid item xs={12}>
       <h2>Produits populaires</h2>
       {loading ? (
