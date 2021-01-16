@@ -59,6 +59,7 @@ resetForm = () => {
       email: this.state.email,
       message: this.state.message,
       subject: this.state.subject,
+      type: "contact"
     };
 
     try {

@@ -20,6 +20,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import ProductNewScreen from './screens/ProductNewScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import ContactScreen from './screens/ContactScreen';
@@ -99,6 +100,11 @@ function App() {
             <Route
               path="/product/:id/edit"
               component={ProductEditScreen}
+              exact
+            ></Route>
+            <Route
+              path="/product/new"
+              component={ProductNewScreen}
               exact
             ></Route>
             <Route path="/signin" component={SigninScreen}></Route>

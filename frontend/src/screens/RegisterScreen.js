@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
@@ -19,11 +20,23 @@ export default function RegisterScreen(props) {
   const { userInfo, loading, error } = userRegister;
 
   const dispatch = useDispatch();
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Password and confirm password are not match');
+      alert('Le mot de passe et le mot de passe de confirmation ne correspondent pas');
     } else {
+      let data = {
+        name,
+        email,
+        type: "welcome",
+      };
+  
+      try {
+        await axios.post("api/send", data)
+      } catch (error) {
+        console.log(error);
+      }
       dispatch(register(name, email, password));
     }
   };

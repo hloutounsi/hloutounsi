@@ -65,7 +65,9 @@ export default function ProductListScreen(props) {
     <div>
       <div className="row">
         <h1>Products</h1>
-        <button type="button" className="primary" onClick={createHandler}>
+        <button type="button" className="primary" onClick={() =>
+          props.history.push(`/product/new`)
+        }>
           Create Product
         </button>
       </div>

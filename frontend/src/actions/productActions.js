@@ -72,15 +72,15 @@ export const detailsProduct = (productId) => async (dispatch) => {
     });
   }
 };
-export const createProduct = () => async (dispatch, getState) => {
-  dispatch({ type: PRODUCT_CREATE_REQUEST });
+export const createProduct = (product) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_CREATE_REQUEST, payload: product });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const { data } = await Axios.post(
       '/api/products',
-      {},
+      product,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       }

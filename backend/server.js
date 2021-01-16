@@ -20,23 +20,8 @@ mongoose
 
 const app = express();
 // const __dirname = path.resolve();
-app.use(bodyParser.json());
-app.use('/api/uploads', uploadRoute);
-app.use('/api/users', userRoute);
-app.use('/api/products', productRoute);
-app.use('/api/orders', orderRoute);
-app.get('/api/config/paypal', (req, res) => {
-  res.send(config.PAYPAL_CLIENT_ID);
-});
-app.get('/api/config/google', (req, res) => {
-  res.send(config.GOOGLE_API_KEY);
-});
-app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
-app.use(express.static(path.join(__dirname, '/../frontend/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
-});
 
+app.use(bodyParser.json());
 app.post('/api/send', async (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
@@ -48,6 +33,15 @@ app.post('/api/send', async (req, res) => {
     </ul>
     <h3>Message</h3>
     <p>${req.body.message}</p>
+  `;
+  const outputWelcome = `
+    <div style="padding: 5% 20%">
+    <img src="https://hloutounsi.com/images/logo.png" width=200 />
+    <h1>Bienvenue Mr. / Mme., ${req.body.name}</h1>
+    <p>Nous vous remercions pour votre inscription. À partir de maintenant,
+    vous pouvez démarrer une session sur votre profil d'utilisateur en indiquant 
+    votre e-mail et votre mot de passe sur <a href="https://hloutounsi.com">hloutounsi.com</a></p>
+    </div>
   `;
 
   // create reusable transporter object using the default SMTP transport
@@ -65,10 +59,10 @@ app.post('/api/send', async (req, res) => {
   // setup email data with unicode symbols
   let mailOptions = {
     from: config.EMAIL, // sender address
-    to: 'medbbelaid@gmail.com', // list of receivers
+    to: req.body.type === "welcome" ? req.body.email : 'medbbelaid@gmail.com', // list of receivers
     subject: 'Node Contact Request', // Subject line
     text: 'Hello world?', // plain text body
-    html: output // html body
+    html: req.body.type === "welcome" ? outputWelcome : output // html body
   };
 
   // send mail with defined transport object
@@ -81,6 +75,21 @@ app.post('/api/send', async (req, res) => {
 
     res.send('Email has been sent');
   });
+});
+app.use('/api/uploads', uploadRoute);
+app.use('/api/users', userRoute);
+app.use('/api/products', productRoute);
+app.use('/api/orders', orderRoute);
+app.get('/api/config/paypal', (req, res) => {
+  res.send(config.PAYPAL_CLIENT_ID);
+});
+app.get('/api/config/google', (req, res) => {
+  res.send(config.GOOGLE_API_KEY);
+});
+app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
+app.use(express.static(path.join(__dirname, '/../frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
 });
 
 app.listen(config.PORT, () => {
