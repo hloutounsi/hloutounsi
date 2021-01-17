@@ -22,7 +22,7 @@ const data = {
         "image" : "/images/p1.jpg",
         "price" : 120,
         "countInStock" : 10,
-        "brand" : "Nike",
+        "brand" : 24,
         "rating" : 4.5,
         "numReviews" : 10,
         "description" : "high quality product",

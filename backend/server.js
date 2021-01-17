@@ -37,12 +37,24 @@ app.post('/api/send', async (req, res) => {
   const outputWelcome = `
     <div style="padding: 3% 20%">
     <img src="https://hloutounsi.com/images/logo.png" width=300 />
-    <h1>Bienvenue Mr. / Mme., ${req.body.name}</h1>
+    <h2>Bienvenue Mr. / Mme., ${req.body.name}</h2>
     <p>Nous vous remercions pour votre inscription. À partir de maintenant,
     vous pouvez démarrer une session sur votre profil d'utilisateur en indiquant 
     votre e-mail et votre mot de passe sur <a href="https://hloutounsi.com">hloutounsi.com</a></p>
     </div>
   `;
+  const outputPayed = `
+  <div style="padding: 3% 20%">
+  <img src="https://hloutounsi.com/images/logo.png" width=300 />
+  <h2>Confirmation de commande n° ${req.body.orderId}</h2>
+  <h3>Bonjour</h3>
+  <p>Nous vous remercions de votre commande.
+  Votre date de livraison estimée est indiquée ci-dessous. 
+  Vous pouvez suivre l’état de votre commande ou modifier celle-ci dans
+  <a href="https://hloutounsi.com/orderhistory"> Vos commandes</a> sur Hloutounsi.com</p>
+  <p>Livraison entre ${req.body.dateMin} et ${req.body.dateMax}</p>
+  </div>
+`;
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -56,13 +68,16 @@ app.post('/api/send', async (req, res) => {
     }
   });
 
+  let html = output;
+  if(req.body.type === "welcome") out = outputWelcome;
+  if(req.body.type === "payed") out = outputPayed;
+
   // setup email data with unicode symbols
   let mailOptions = {
     from: config.EMAIL, // sender address
-    to: req.body.type === "welcome" ? req.body.email : 'medbbelaid@gmail.com', // list of receivers
-    subject: 'Node Contact Request', // Subject line
-    text: 'Hello world?', // plain text body
-    html: req.body.type === "welcome" ? outputWelcome : output // html body
+    to: req.body.type === "welcome" || req.body.type === "payed" ? req.body.email : 'medbbelaid@gmail.com', // list of receivers
+    subject: 'Votre commande HlouTounsi.com', // Subject line
+    html // html body
   };
 
   // send mail with defined transport object
@@ -73,7 +88,7 @@ app.post('/api/send', async (req, res) => {
     console.log('Message sent: %s', info.messageId);   
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-    res.send('Email has been sent');
+    res.send('L\'email a été bien envoyé');
   });
 });
 app.use('/api/uploads', uploadRoute);

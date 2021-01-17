@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import InfoIcon from '@material-ui/icons/Info';
+import Moment from 'react-moment';
 
 import { getPrice } from '../utils';
 import { saveShippingAddress } from '../actions/cartActions';
@@ -115,6 +116,7 @@ export default function ShippingAddressScreen(props) {
     props.history.push('/map');
   };
   const price = getPrice(cart.cartItems);
+  var date = new Date();
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -126,7 +128,7 @@ export default function ShippingAddressScreen(props) {
           <p><InfoIcon style={{ fontSize: 50, float: "left", marginRight: 15 }} />
           {price < 40 && `Il vous reste ${40 - price}€ pour avoir une livraison gratuite en point relais et ${70 - price}€ à domicile `}
           {(price >= 40 && state.checkedA) && `Il vous reste ${70 - price}€ pour avoir une livraison gratuite à domicile `}
-          {(price < 40 || (price >= 40 && state.checkedA)) && <Link to="/">Aller faire les courses</Link>}</p>
+          {(price < 40 || (price >= 40 && state.checkedA)) && <Link to="/" style={{ float: "right", marginRight: 50 }}>Aller faire les courses</Link>}</p>
         </div>}
         <FormGroup row>
           <FormControlLabel
@@ -151,6 +153,10 @@ export default function ShippingAddressScreen(props) {
           }
           label={`Livraison en point relais UPS ${price < 40 ? 6 : 0}€`}
         />
+        <span style={{ color: "#BB1918", marginLeft: 11 }}>Entre <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 4)}</Moment> et <Moment format="DD/MM/YYYY">
+          {date.setDate(date.getDate() + 10)}
+        </Moment>
+        </span>
         </FormGroup>
         {state.checkedB && <div>
           <p>Pour séléctionner l'adresse en point de relais la plus proche de chez-vous, Veuillez cliquer sur ce lien 

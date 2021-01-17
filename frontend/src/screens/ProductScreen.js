@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { createReview, detailsProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -136,17 +137,19 @@ export default function ProductScreen(props) {
                                   </option>
                                 )
                               )}
-                            </select> KG
+                            </select> {` x 500 g (~ ${parseInt(product.brand) ? qty * parseInt(product.brand) : 'erreur'} pièces)`}
                           </div>
                         </div>
                       </li>
                       <li>
-                        <button
+                        <Button
                           onClick={addToCartHandler}
-                          className="primary block"
+                          color="primary"
+                          variant="contained"
+                          className="block"
                         >
                           Ajouter au panier
-                        </button>
+                        </Button>
                       </li>
                     </>
                   )}

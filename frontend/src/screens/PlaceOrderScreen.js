@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Moment from 'react-moment';
+
 import { createOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
@@ -29,6 +31,7 @@ export default function PlaceOrderScreen(props) {
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [dispatch, order, props.history, success]);
+  var date = new Date();
   return (
     <div>
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
@@ -91,6 +94,10 @@ export default function PlaceOrderScreen(props) {
               <li>
                 <h2>Récapitulatif de la commande</h2>
               </li>
+              <li>
+                <span>Livraion entre <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 4)}</Moment> et <Moment format="DD/MM/YYYY">
+                  {date.setDate(date.getDate() + 10)}</Moment></span>
+                </li>
               <li>
                 <div className="row">
                   <div>Produits</div>

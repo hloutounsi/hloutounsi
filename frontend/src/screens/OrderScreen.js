@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
@@ -37,13 +38,30 @@ export default function OrderScreen(props) {
       const { data } = await Axios.get('/api/config/paypal');
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
       script.async = true;
       script.onload = () => {
         setSdkReady(true);
       };
       document.body.appendChild(script);
     };
+    const sendEmail = async () => {
+      let date = Date.now();
+        let data = {
+          name: order.shippingAddress.fullName,
+          email: order.shippingAddress.email,
+          total: order.totalPrice.toFixed(2),
+          orderId: order._id,
+          dateMin: <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 4)}</Moment>,
+          dateMax: <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 10)}</Moment>,
+          type: "payed",
+        };
+        try {
+          await Axios.post("api/send", data)
+        } catch (error) {
+          console.log(error);
+        }
+    }
     if (
       !order ||
       successPay ||
@@ -60,6 +78,8 @@ export default function OrderScreen(props) {
         } else {
           setSdkReady(true);
         }
+      } else {
+        sendEmail();
       }
     }
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
