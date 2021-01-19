@@ -58,7 +58,9 @@ app.post('/api/send', async (req, res) => {
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: "mail.privateemail.com",
+    port: 587,
+    secure: false,
     auth: {
         user: config.EMAIL, // generated ethereal user
         pass: config.PASSWORD_EMAIL  // generated ethereal password
@@ -69,13 +71,13 @@ app.post('/api/send', async (req, res) => {
   });
 
   let html = output;
-  if(req.body.type === "welcome") out = outputWelcome;
-  if(req.body.type === "payed") out = outputPayed;
+  if(req.body.type === "welcome") html = outputWelcome;
+  if(req.body.type === "payed") html = outputPayed;
 
   // setup email data with unicode symbols
   let mailOptions = {
     from: config.EMAIL, // sender address
-    to: req.body.type === "welcome" || req.body.type === "payed" ? req.body.email : 'medbbelaid@gmail.com', // list of receivers
+    to: req.body.type === "welcome" || req.body.type === "payed" ? req.body.email : 'contact@hloutounsi.com', // list of receivers
     subject: 'Votre commande HlouTounsi.com', // Subject line
     html // html body
   };
@@ -85,7 +87,7 @@ app.post('/api/send', async (req, res) => {
     if (error) {
         return console.log(error);
     }
-    console.log('Message sent: %s', info.messageId);   
+    console.log('Message sent: %s', info.messageId);
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
     res.send('L\'email a été bien envoyé');

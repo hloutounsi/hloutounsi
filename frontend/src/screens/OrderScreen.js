@@ -2,9 +2,10 @@ import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Moment from 'react-moment';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import {
@@ -45,19 +46,28 @@ export default function OrderScreen(props) {
       };
       document.body.appendChild(script);
     };
-    const sendEmail = async () => {
-      let date = Date.now();
+    const sendEmail = () => {
+      const dateMin = moment().add(4, 'd').format("DD/MM/YYYY");
+      const dateMax = moment().add(10, 'd').format("DD/MM/YYYY");
         let data = {
           name: order.shippingAddress.fullName,
-          email: order.shippingAddress.email,
+          email: userInfo.email,
           total: order.totalPrice.toFixed(2),
           orderId: order._id,
-          dateMin: <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 4)}</Moment>,
-          dateMax: <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 10)}</Moment>,
+          dateMin,
+          dateMax,
           type: "payed",
         };
         try {
-          await Axios.post("api/send", data)
+          Axios.post("/api/send", data);
+          order.orderItems.forEach((item) => {
+            Axios.get(`/api/products/${item.product}`)
+            .then(response => dispatch(updateProduct({
+              ...response.data,
+              brand: 14,
+              countInStock: response.data.countInStock - item.qty,
+            })))
+          });
         } catch (error) {
           console.log(error);
         }
@@ -79,6 +89,7 @@ export default function OrderScreen(props) {
           setSdkReady(true);
         }
       } else {
+        console.log({...order.orderItems[0]._id})
         sendEmail();
       }
     }
@@ -208,6 +219,7 @@ export default function OrderScreen(props) {
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
+                        currency="EUR"
                       ></PayPalButton>
                     </>
                   )}

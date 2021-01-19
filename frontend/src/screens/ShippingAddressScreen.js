@@ -116,7 +116,6 @@ export default function ShippingAddressScreen(props) {
     props.history.push('/map');
   };
   const price = getPrice(cart.cartItems);
-  var date = new Date();
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -153,9 +152,8 @@ export default function ShippingAddressScreen(props) {
           }
           label={`Livraison en point relais UPS ${price < 40 ? 6 : 0}€`}
         />
-        <span style={{ color: "#BB1918", marginLeft: 11 }}>Entre <Moment format="DD/MM/YYYY">{date.setDate(date.getDate() + 4)}</Moment> et <Moment format="DD/MM/YYYY">
-          {date.setDate(date.getDate() + 10)}
-        </Moment>
+        <span style={{ color: "#BB1918", marginLeft: 11 }}>
+          Entre <Moment add={{ days: 4 }} format="DD/MM/YYYY" /> et <Moment add={{ days: 10 }} format="DD/MM/YYYY" />
         </span>
         </FormGroup>
         {state.checkedB && <div>
