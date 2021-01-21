@@ -114,7 +114,7 @@ function App() {
             <Route path="/payment" component={PaymentMethodScreen}></Route>
             <Route path="/placeorder" component={PlaceOrderScreen}></Route>
             <PrivateRoute path="/order/:id" component={OrderScreen}></PrivateRoute>
-            <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+            <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}></PrivateRoute>
             <Route
               path="/search/name/:name?"
               component={SearchScreen}

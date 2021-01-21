@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     border: "0.1rem #F8EBC0 solid",
-    width: '15ch',
+    width: '13ch',
     padding: theme.spacing(1),
     // vertical padding + font size from searchIcon
     // paddingRight: `calc(1em + ${theme.spacing(4)}px)`,

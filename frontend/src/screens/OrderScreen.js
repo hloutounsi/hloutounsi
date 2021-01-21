@@ -2,6 +2,7 @@ import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Moment from "react-moment";
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
@@ -114,7 +115,7 @@ export default function OrderScreen(props) {
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Livraison</h2>
+              <h2>Méthode de Livraison {order.shippingAddress.type ? "à domicile" : "en point relais"}</h2>
                 <p>
                   <strong>Nom:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Adresse: </strong> {order.shippingAddress.address},
@@ -139,7 +140,7 @@ export default function OrderScreen(props) {
                 </p>
                 {order.isPaid ? (
                   <MessageBox variant="success">
-                    Payé le {order.paidAt}
+                    Payé le <Moment format="DD/MM/YYYY">{order.paidAt}</Moment> à <Moment format="hh:mm">{order.paidAt}</Moment>
                   </MessageBox>
                 ) : (
                   <MessageBox variant="danger">Impayé</MessageBox>

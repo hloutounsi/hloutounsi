@@ -5,7 +5,7 @@ export default function CheckoutSteps(props) {
     <div className="row checkout-steps">
       <div className={props.step1 ? 'active' : ''}>Connexion</div>
       <div className={props.step2 ? 'active' : ''}>Livraison</div>
-      <div className={props.step3 ? 'active' : ''}>Passer la commande</div>
+      <div className={props.step3 ? 'active' : ''}>Commande</div>
     </div>
   );
 }
