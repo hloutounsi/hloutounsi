@@ -58,6 +58,7 @@ export default function OrderScreen(props) {
           dateMin,
           dateMax,
           type: "payed",
+          shippingType: order.shippingAddress.type ? "à domicile" : "en point relais",
         };
         try {
           Axios.post("/api/send", data);

@@ -52,7 +52,8 @@ app.post('/api/send', async (req, res) => {
   Votre date de livraison estimée est indiquée ci-dessous. 
   Vous pouvez suivre l’état de votre commande ou modifier celle-ci dans
   <a href="https://hloutounsi.com/orderhistory"> Vos commandes</a> sur Hloutounsi.com</p>
-  <p>Livraison entre ${req.body.dateMin} et ${req.body.dateMax}</p>
+  <p>Livraison entre ${req.body.dateMin} et ${req.body.dateMax}<br />
+  Méthode de Livraison ${req.body.shippingType}<br />Prix total: ${req.body.total}</p>
   </div>
 `;
 
@@ -106,7 +107,7 @@ app.get('/api/config/google', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
 app.use(express.static(path.join(__dirname, '/../frontend/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
+  res.sendFile(express.static(path.join(__dirname, '/../frontend/build/index.html')));
 });
 
 app.listen(config.PORT, () => {

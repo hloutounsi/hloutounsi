@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 import Rating from './Rating';
 
 export default function Product(props) {
@@ -13,6 +14,9 @@ export default function Product(props) {
         <Link to={`/product/${product._id}`}>
           <h2>{product.name}</h2>
         </Link>
+        {(product.countInStock < 7 && product.countInStock ==! 0) && <Alert style={{ fontSize: "inherit" }} severity="error">
+            {`Il reste ${product.countInStock * 0.5} Kg en stock`}
+          </Alert>}
         <Rating
           rating={product.rating}
           numReviews={product.numReviews}
@@ -21,7 +25,7 @@ export default function Product(props) {
           <div className="price">{product.price}‎€</div>
           {product.seller && <div>
             <Link to={`/seller/${product.seller._id}`}>
-              {product.seller.name}
+              Vendeur {product.seller.seller.name}
             </Link>
           </div>}
         </div>
