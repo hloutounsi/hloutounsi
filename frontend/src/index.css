@@ -45,7 +45,8 @@ h1 {
 }
 h2 {
   font-size: 1.6rem;
-  padding: 1rem 0;
+  padding: 0;
+  margin-bottom: 10px;
 }
 
 a {
@@ -66,11 +67,9 @@ li {
   margin-top: 1rem;
 }
 
-select,
-textarea,
 select:hover,
 textarea:hover {
-  border: 0.1rem #fff solid;
+  border: 0.1rem #eee solid;
 }
 button.primary {
   background-color: #BB1918;

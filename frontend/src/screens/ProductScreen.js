@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Fab from '@material-ui/core/Fab';
 import { createReview, detailsProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -57,7 +59,12 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Retour</Link>
+          <Link to="/">
+            <Fab variant="extended" style={{ fontSize: 'inherit', margin: 10 }}>
+              <ArrowBackIcon style={{ marginRight: 8 }} />
+                Retour
+            </Fab>
+          </Link>
           <div className="row top">
             <div className="col-2">
               <img
