@@ -60,7 +60,7 @@ export default function ProductScreen(props) {
       ) : (
         <div>
           <Link to="/">
-            <Fab variant="extended" style={{ fontSize: 'inherit', margin: 10 }}>
+            <Fab variant="extended" style={{ fontSize: 'inherit', margin: "2px 10px 10px" }} color="secondary">
               <ArrowBackIcon style={{ marginRight: 8 }} />
                 Retour
             </Fab>
@@ -151,7 +151,7 @@ export default function ProductScreen(props) {
                       <li>
                         <Button
                           onClick={addToCartHandler}
-                          color="primary"
+                          color="secondary"
                           variant="contained"
                           className="block"
                         >

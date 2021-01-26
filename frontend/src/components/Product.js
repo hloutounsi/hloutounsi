@@ -22,7 +22,7 @@ export default function Product(props) {
   const { product } = props;
   const classes = useStyles();
   return (
-  <Card className={classes.root} style={{ margin: '1rem', minHeight: 340 }}>
+  <Card className={classes.root} style={{ margin: '1rem', minHeight: 295, background: '#fffcf0' }}>
   <Link to={`/product/${product._id}`}>
     <CardMedia
       className={classes.media}
@@ -31,14 +31,14 @@ export default function Product(props) {
       style={{ minWidth: 300 }}
     />
     </Link>
-    <CardContent>
+    <CardContent style={{ padding: "0 16px" }}>
       <Typography gutterBottom variant="h5" component="h2">
         <Link to={`/product/${product._id}`}>
           <h2>{product.name}</h2>
           {product.rating > 0 && <Rating rating={product.rating} numReviews={product.numReviews}></Rating>}
       </Link>
       {(product.countInStock < 7 && product.countInStock >= 0) && 
-      <Alert style={{ fontSize: "inherit", marginTop: 10 }} severity="error">
+      <Alert style={{ fontSize: "inherit", marginTop: 10, padding: "0 16px" }} severity="error">
           {`Il reste ${product.countInStock * 0.5} Kg en stock`}
         </Alert>}
       </Typography>
