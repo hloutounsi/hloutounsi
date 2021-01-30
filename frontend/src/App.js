@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import CardContent from '@material-ui/core/CardContent';
+import RoomIcon from '@material-ui/icons/Room';
+import Typography from '@material-ui/core/Typography';
 import theme from './theme';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
@@ -33,6 +39,23 @@ import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  paper: {
+    backgroundColor: 'transparent',
+    color: "#fff",
+    fontSize: "inherit"
+  }
+});
+
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -53,6 +76,7 @@ function App() {
   useEffect(() => {
     dispatch(listProductCategories());
   }, [dispatch]);
+  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -107,7 +131,7 @@ function App() {
               component={ProductNewScreen}
               exact
             ></Route>
-            <Route path="/signin" component={SigninScreen}></Route>
+            <Route exact={true} path="/signin" component={SigninScreen}></Route>
             <Route path="/contact" component={ContactScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -166,7 +190,25 @@ function App() {
 
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
-          <footer className="row center" style={{ backgroundColor: "#BB1918", color: "#F8EBC0" }}>All right reserved</footer>
+            <Grid item xs={12}>
+              <Grid container justify="center" spacing={2} style={{ backgroundColor: "#BB1918", padding: 8 }}>
+                  <Grid className={classes.paper}>
+                      <CardContent>
+                        <h3 style={{fontSize: "2rem"}}>
+                          Contact
+                        </h3>
+                        <Typography variant="body2" component="p" style={{fontSize: "inherit"}}>
+                          <RoomIcon /> rue du Lavoir Metz 57000, France
+                          <br />
+                          <PhoneAndroidIcon /> +33 7 66 12 25 63
+                        </Typography>
+                      </CardContent>
+                  </Grid>
+              </Grid>
+              <Grid container style={{ backgroundColor: "#eee", padding: 8 }}>
+                © 2021 Hlou Tounsi. Tous droits réservés
+              </Grid>
+            </Grid>
         </div>
       </BrowserRouter>
     </ThemeProvider>
