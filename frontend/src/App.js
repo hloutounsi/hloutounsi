@@ -4,7 +4,12 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import TextField from './components/TextField';
+import Snackbar from './components/Snackbar';
+import Button from './components/Button';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import EmailIcon from '@material-ui/icons/Email';
 import CardContent from '@material-ui/core/CardContent';
 import RoomIcon from '@material-ui/icons/Room';
 import Typography from '@material-ui/core/Typography';
@@ -40,31 +45,52 @@ import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
   paper: {
     backgroundColor: 'transparent',
     color: "#fff",
-    fontSize: "inherit"
-  }
+    fontSize: "inherit",
+    marginBottom: 8,
+    minWidth: 300,
+    margin: 8
+  },
+  card: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: "#FFEFA5",
+    padding: theme.spacing(3)
+  },
+  cardContent: {
+    maxWidth: 400,
+  },
+  textField: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+  },
+  button: {
+    width: '100%',
+  },
 });
 
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setOpen(true);
   };
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
@@ -193,14 +219,42 @@ function App() {
             <Grid item xs={12}>
               <Grid container justify="center" spacing={2} style={{ backgroundColor: "#BB1918", padding: 8 }}>
                   <Grid className={classes.paper}>
+                  <CardContent>
+                    <div class="fb-page" data-href="https://www.facebook.com/Malika-110148140948324/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Malika-110148140948324/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Malika-110148140948324/">Malika</a></blockquote></div>
+                    </CardContent>
+                  </Grid>
+                  <Grid className={classes.paper}>
+                  <CardContent>
+                    <div className={classes.card}>
+                      <form onSubmit={handleSubmit} className={classes.cardContent}>
+                        <Typography variant="h2" component="h2" gutterBottom color="primary">
+                          NEWSLETTER
+                        </Typography>
+                        <Typography variant="h5" color="primary">
+                          Abonnez-vous et recevoir notre dernières nouvelles
+                        </Typography>
+                        <TextField noBorder className={classes.textField} placeholder="Your email" />
+                        <Button type="submit" color="primary" variant="contained" className={classes.button}>
+                          Abonnez vous
+                        </Button>
+                      </form>
+                    </div>
+                    </CardContent>
+                  </Grid>
+                  <Grid className={classes.paper}>
                       <CardContent>
+                        <img src="https://hloutounsi.com/images/logo.png" width={250} style={{backgroundColor: "#fff", padding: 10}}/>
                         <h3 style={{fontSize: "2rem"}}>
-                          Contact
+                          CONTACT
                         </h3>
                         <Typography variant="body2" component="p" style={{fontSize: "inherit"}}>
                           <RoomIcon /> rue du Lavoir Metz 57000, France
                           <br />
-                          <PhoneAndroidIcon /> +33 7 66 12 25 63
+                          <PhoneAndroidIcon /> <a href="tel://+33766122563" style={{ color: "#fff" }}>+33 7 66 12 25 63</a>
+                          <br />
+                          <EmailIcon /> <a href="mailto:contact@hloutounsi.com" style={{ color: "#fff" }}>contact@hloutounsi.com</a>
+                          <br />
+                          <ContactMailIcon /> <Link to="/contact" style={{ color: "#fff" }}>Contactez-nous</Link>
                         </Typography>
                       </CardContent>
                   </Grid>
@@ -210,6 +264,11 @@ function App() {
               </Grid>
             </Grid>
         </div>
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          message="Nous vous informerons de la date de l'arrivée de la premiere commande de gâteau"
+      />
       </BrowserRouter>
     </ThemeProvider>
   );

@@ -15,7 +15,13 @@ const theme = createMuiTheme({
     input: {
       height: 30
     }
+  },
+  palette: {
+    primary: {
+      main: "#903b0d",
+    },
   }
+  //
 })
 
 export default theme
