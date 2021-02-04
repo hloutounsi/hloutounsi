@@ -19,7 +19,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 app.use(bodyParser.json());
 app.post('/api/send', async (req, res) => {
