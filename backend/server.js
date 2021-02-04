@@ -19,7 +19,7 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 app.use(bodyParser.json());
 app.post('/api/send', async (req, res) => {
@@ -107,7 +107,7 @@ app.get('/api/config/google', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
 app.use(express.static(path.join(__dirname, '/../frontend/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/frontend/build/index.html'));
+  res.sendFile(path.resolve(__dirname + '/frontend/build/index.html'));
   // res.sendFile('c:/hloutounsi/frontend/build/index.html');
 });
 
