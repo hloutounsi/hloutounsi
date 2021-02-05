@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import config from './config.js';
 import userRoute from './routers/userRouter.js';
+import emailRoute from './routers/emailRouter.js';
 import productRoute from './routers/productRouter.js';
 import orderRoute from './routers/orderRouter.js';
 import uploadRoute from './routers/uploadRouter.js';
@@ -96,6 +97,7 @@ app.post('/api/send', async (req, res) => {
 });
 app.use('/api/uploads', uploadRoute);
 app.use('/api/users', userRoute);
+app.use('/api/emails', emailRoute);
 app.use('/api/products', productRoute);
 app.use('/api/orders', orderRoute);
 app.get('/api/config/paypal', (req, res) => {

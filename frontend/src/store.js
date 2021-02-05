@@ -31,6 +31,10 @@ import {
   userUpdateReducer,
 } from './reducers/userReducers';
 
+import {
+  emailListReducer,
+} from './reducers/emailReducers';
+
 const initialState = {
   userSignin: {
     userInfo: localStorage.getItem('userInfo')
@@ -67,6 +71,7 @@ const reducer = combineReducers({
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
   userList: userListReducer,
+  emailList: emailListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
   productCategoryList: productCategoryListReducer,

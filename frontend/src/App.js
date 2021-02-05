@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
@@ -19,6 +20,7 @@ import AdminRoute from './components/AdminRoute';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
+import DashboardScreen from './screens/DashboardScreen'
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
@@ -76,6 +78,7 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = useState('');
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -89,8 +92,14 @@ function App() {
   };
 
   const handleSubmit = (event) => {
+    Axios.post('/api/emails', {email}, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     event.preventDefault();
     setOpen(true);
+    setEmail('');
   };
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
@@ -185,6 +194,7 @@ function App() {
               component={SearchScreen}
               exact
             ></Route>
+            <PrivateRoute path="/dashboard" component={DashboardScreen}></PrivateRoute>
             <PrivateRoute
               path="/profile"
               component={ProfileScreen}
@@ -231,9 +241,17 @@ function App() {
                           NEWSLETTER
                         </Typography>
                         <Typography variant="h5" color="primary">
-                          Abonnez-vous et recevoir notre dernières nouvelles
+                          Abonnez-vous et recevoir nos dernier nouvelles
                         </Typography>
-                        <TextField noBorder className={classes.textField} placeholder="Your email" />
+                        <TextField
+                          noBorder
+                          className={classes.textField}
+                          placeholder="Your email"
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
                         <Button type="submit" color="primary" variant="contained" className={classes.button}>
                           Abonnez vous
                         </Button>
