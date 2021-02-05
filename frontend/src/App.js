@@ -254,7 +254,7 @@ function App() {
                           <br />
                           <EmailIcon /> <a href="mailto:contact@hloutounsi.com" style={{ color: "#fff" }}>contact@hloutounsi.com</a>
                           <br />
-                          <ContactMailIcon /> <Link to="/#/contact" style={{ color: "#fff" }}>Contactez-nous</Link>
+                          <ContactMailIcon /> <Link to="/contact" style={{ color: "#fff" }}>Contactez-nous</Link>
                         </Typography>
                       </CardContent>
                   </Grid>
