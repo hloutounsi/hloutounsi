@@ -12,4 +12,5 @@ export default {
   secretAccessKey: process.env.secretAccessKey || 'secretAccessKey',
   EMAIL: process.env.EMAIL || 'hloutounsi2@gmail.com',
   PASSWORD_EMAIL: process.env.PASSWORD_EMAIL || 'email password',
+  PRODUTION: process.env.PRODUTION || false
 };
