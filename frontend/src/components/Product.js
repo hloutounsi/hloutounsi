@@ -39,12 +39,12 @@ export default function Product(props) {
       </Link>
       {(product.countInStock < 7 && product.countInStock >= 0) && 
       <Alert style={{ fontSize: "inherit", marginTop: 10, padding: "0 16px" }} severity="error">
-          {`Il reste ${product.countInStock * 0.5} Kg en stock`}
+          {`Il reste ${product.countInStock * (product.weight / 1000)} Kg en stock`}
         </Alert>}
       </Typography>
       <Typography variant="body2" color="textSecondary" component="p">
         <div className="row">
-          <div className="price">{product.price}‎€ <span style={{ fontSize: '0.6em' }}>{` le 500 g (~ ${parseInt(product.brand) || 'erreur'} pièces)`}</span></div>
+          <div className="price">{product.price}‎€ <span style={{ fontSize: '0.6em' }}>{` le ${product.weight} g (~ ${parseInt(product.brand) || 'erreur'} pièces)`}</span></div>
           {product.seller && <div style={{ fontSize: '1.2em', marginTop: 9 }}>
             <Link to={`/seller/${product.seller._id}`}>
               Vendeur {product.seller.seller.name}

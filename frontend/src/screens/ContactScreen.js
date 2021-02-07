@@ -5,6 +5,9 @@ import Button from "@material-ui/core/Button";
 import Alert from '@material-ui/lab/Alert';
 
 export default class Contact extends Component {
+componentDidMount() {
+  window.scrollTo(0, 0);
+}
   state = {
     name: "",
     message: "",

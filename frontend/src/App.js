@@ -261,7 +261,7 @@ function App() {
                   </Grid>
                   <Grid className={classes.paper}>
                       <CardContent>
-                        <img src="https://hloutounsi.com/images/logo.png" width={250} style={{backgroundColor: "#fff", padding: 10}}/>
+                        <Link to="/"><img src="https://hloutounsi.com/images/logo.png" width={250} style={{backgroundColor: "#fff", padding: 10}}/></Link>
                         <h3 style={{fontSize: "2rem"}}>
                           CONTACT
                         </h3>
