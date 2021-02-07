@@ -23,6 +23,7 @@ export default function SellerScreen(props) {
   useEffect(() => {
     dispatch(detailsUser(sellerId));
     dispatch(listProducts({ seller: sellerId }));
+    window.scrollTo(0, 0);
   }, [dispatch, sellerId]);
   return (
     <div className="row top">

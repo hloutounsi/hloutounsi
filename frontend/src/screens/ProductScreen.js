@@ -37,6 +37,7 @@ export default function ProductScreen(props) {
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
     dispatch(detailsProduct(productId));
+    window.scrollTo(0,0);
   }, [dispatch, productId, successReviewCreate]);
   const addToCartHandler = () => {
     props.history.push(`/cart/${productId}?qty=${qty}`);
@@ -84,7 +85,7 @@ export default function ProductScreen(props) {
                     numReviews={product.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : {product.price}€</li>
+                <li>Pirce : {product.newPrice ?  product.newPrice : product.price}€</li>
                 <li>
                   Description:
                   <p>{product.description}</p>
@@ -112,7 +113,8 @@ export default function ProductScreen(props) {
                   <li>
                     <div className="row">
                       <div>Prix</div>
-                      <div className="price">{product.price}€</div>
+                      <div className="price">{product.newPrice ? <><span style={{ color: 'red', textDecoration: 'line-through', marginRight: 10 }}>{product.price}‎€</span>
+                        <span>{product.newPrice}€</span></> : <span>{product.price}‎€</span>}</div>
                     </div>
                   </li>
                   <li>
