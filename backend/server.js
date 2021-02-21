@@ -24,7 +24,7 @@ const app = express();
 // const __dirname = path.resolve();
 
 app.use(bodyParser.json());
-app.use(enforce.HTTPS());
+app.use(enforce.HTTPS(true));
 app.post('/api/send', async (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
