@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
@@ -24,6 +25,7 @@ import DashboardScreen from './screens/DashboardScreen'
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
+import CoffretScreen from './screens/CoffretScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductListScreen from './screens/ProductListScreen';
@@ -74,6 +76,8 @@ const useStyles = makeStyles({
   },
 });
 
+ReactGA.initialize('G-ZBQ0KCBXNR');
+
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -82,6 +86,8 @@ function App() {
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error, user } = userDetails;
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
@@ -108,9 +114,21 @@ function App() {
     error: errorCategories,
     categories,
   } = productCategoryList;
+
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
     dispatch(listProductCategories());
-  }, [dispatch]);
+    if(user) {
+      ReactGA.set({
+        userId: user._id,
+        userName: user.name,
+        userEmail: user.email
+        // any data that is relevant to the user session
+        // that you would like to track with google analytics
+      })
+    }
+  }, [dispatch, user]);
+
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
@@ -172,6 +190,7 @@ function App() {
             <Route path="/shipping" component={ShippingAddressScreen}></Route>
             <Route path="/payment" component={PaymentMethodScreen}></Route>
             <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+            <Route path="/box" component={CoffretScreen}></Route>
             <PrivateRoute path="/order/:id" component={OrderScreen}></PrivateRoute>
             <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}></PrivateRoute>
             <Route
