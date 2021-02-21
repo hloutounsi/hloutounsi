@@ -1,5 +1,5 @@
 import express from 'express';
-import enforce from 'express-sslify';
+// import enforce from 'express-sslify';
 import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -24,7 +24,7 @@ const app = express();
 // const __dirname = path.resolve();
 
 app.use(bodyParser.json());
-app.use(enforce.HTTPS(true));
+// app.use(enforce.HTTPS(true));
 app.post('/api/send', async (req, res) => {
   const output = `
     <p>Nouveau demande de contact</p>
