@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import ReactGA from 'react-ga';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route, withRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -76,9 +76,8 @@ const useStyles = makeStyles({
   },
 });
 
-ReactGA.initialize('G-ZBQ0KCBXNR');
-
 function App() {
+  ReactGA.initialize('G-ZBQ0KCBXNR');
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -311,4 +310,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);
