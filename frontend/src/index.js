@@ -1,10 +1,13 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+
+ReactGA.initialize('G-ZBQ0KCBXNR');
 
 ReactDOM.render(
   <Provider store={store}>

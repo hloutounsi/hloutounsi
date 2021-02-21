@@ -77,7 +77,6 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  ReactGA.initialize('G-ZBQ0KCBXNR');
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -117,16 +116,16 @@ function App() {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
     dispatch(listProductCategories());
-    if(user) {
-      ReactGA.set({
-        userId: user._id,
-        userName: user.name,
-        userEmail: user.email
-        // any data that is relevant to the user session
-        // that you would like to track with google analytics
-      })
-    }
-  }, [dispatch, user]);
+    // if(user) {
+    //   ReactGA.set({
+    //     userId: user._id,
+    //     userName: user.name,
+    //     userEmail: user.email
+    //     // any data that is relevant to the user session
+    //     // that you would like to track with google analytics
+    //   })
+    // }
+  }, [dispatch]);
 
   const classes = useStyles();
   return (
