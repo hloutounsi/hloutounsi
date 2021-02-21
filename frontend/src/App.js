@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import ReactDOM from 'react-dom';
+import ReactGA from 'react-ga';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
