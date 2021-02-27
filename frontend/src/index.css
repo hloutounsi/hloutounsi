@@ -168,10 +168,6 @@ button.close-sidebar {
   padding: 0.3rem 0.8rem;
 }
 
-/* Image */
-img {
-  border-radius: 0.5rem;
-}
 img.small {
   max-width: 5rem;
   width: 100%;
@@ -298,10 +294,6 @@ img.large {
 .table button {
   margin: 0 0.2rem;
 }
-/* Carousel */
-/* .carousel .slide img {
-  max-width: 30rem;
-} */
 
 /* Search */
 .search button {

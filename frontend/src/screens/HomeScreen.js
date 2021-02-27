@@ -56,7 +56,7 @@ export default function HomeScreen() {
                     alt={seller.seller.name}
                     className={classes.slideImg}
                   />
-                  <p className="legend">Vendeur {seller.seller.name}</p>
+                  <p className="legend" style={{ width: '40%', left: '95%' }}>Vendeur {seller.seller.name}</p>
                 </Link>
               </div>
             ))}
