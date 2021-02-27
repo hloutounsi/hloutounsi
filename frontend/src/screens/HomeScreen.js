@@ -40,7 +40,6 @@ export default function HomeScreen() {
   return (
     <Grid container spacing={3}>
       {userInfo && <Grid item xs={12}>
-      <h2>Meilleures ventes</h2>
       {loadingSellers ? (
         <LoadingBox></LoadingBox>
       ) : errorSellers ? (
@@ -48,7 +47,7 @@ export default function HomeScreen() {
       ) : (
         <>
           {sellers.length === 0 && <MessageBox>Aucun vendeur trouvé</MessageBox>}
-          <Carousel showArrows autoPlay={false} showThumbs={false}>
+          <Carousel showArrows autoPlay showThumbs={false}>
             {sellers.map((seller) => (
               <div key={seller._id}>
                 <Link to={`/seller/${seller._id}`}>
