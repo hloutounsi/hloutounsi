@@ -43,11 +43,11 @@ export default function Product(props) {
       </Typography>
       <Typography variant="body2" color="textSecondary" component="p">
         <div className="row">
-          <div className="price">
+          {product.price !== 0 && <div className="price">
             {product.newPrice ? <><span style={{ color: 'red', textDecoration: 'line-through', marginRight: 10 }}>{product.price}‎€</span>
             <span>{product.newPrice}€</span></> : <span>{product.price}‎€</span>}
             <span style={{ fontSize: '0.6em' }}>{` le ${product.weight} g (~ ${parseInt(product.brand) || 'erreur'} pièces)`}</span>
-          </div>
+          </div>}
           {product.seller && <div style={{ fontSize: '1.2em', marginTop: 9 }}>
             <Link to={`/seller/${product.seller._id}`}>
               V. {product.seller.seller.name}

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { listTopSellers } from '../actions/userActions';
 import { Link } from 'react-router-dom';
+
+const useStyles = makeStyles((theme) => ({
+  slideImg: {
+    maxWidth: window.screen.width > 1010 ? '100%' : '30rem',
+  }
+}));
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -29,6 +36,7 @@ export default function HomeScreen() {
     window.scrollTo(0, 0);
     dispatch(listTopSellers());
   }, [dispatch]);
+  const classes = useStyles();
   return (
     <Grid container spacing={3}>
       {userInfo && <Grid item xs={12}>
@@ -40,11 +48,15 @@ export default function HomeScreen() {
       ) : (
         <>
           {sellers.length === 0 && <MessageBox>Aucun vendeur trouvé</MessageBox>}
-          <Carousel showArrows autoPlay showThumbs={false}>
+          <Carousel showArrows autoPlay={false} showThumbs={false}>
             {sellers.map((seller) => (
               <div key={seller._id}>
                 <Link to={`/seller/${seller._id}`}>
-                  <img src={seller.seller.logo} alt={seller.seller.name} />
+                  <img
+                    src={window.screen.width > 1010 ? seller.seller.logo : seller.seller.logo2}
+                    alt={seller.seller.name}
+                    className={classes.slideImg}
+                  />
                   <p className="legend">Vendeur {seller.seller.name}</p>
                 </Link>
               </div>
