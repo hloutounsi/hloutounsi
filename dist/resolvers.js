@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.resolvers = void 0;
 
-var _dbConnectors = require("./dbConnectors");
+var _dbConnectors = require("./dbConnectors.js");
 
 // resolver map
 const resolvers = {
@@ -21,9 +21,36 @@ const resolvers = {
     },
     getAliens: () => {
       return _dbConnectors.Aliens.findAll();
+    },
+    getProducts: () => {
+      return _dbConnectors.Products.find();
     }
   },
   Mutation: {
+    createProduct: (root, {
+      input
+    }) => {
+      const newProduct = new _dbConnectors.Products({
+        name: input.name,
+        seller: input.seller,
+        image: input.image,
+        category: input.category,
+        description: input.description,
+        price: input.price,
+        countInStock: input.countInStock,
+        rating: input.rating,
+        numReviews: input.numReviews,
+        reviews: input.reviews,
+        weight: input.weight,
+        newPrice: input.newPrice
+      });
+      newProduct.id = newProduct._id;
+      return new Promise((resolve, object) => {
+        newProduct.save(err => {
+          if (err) reject(err);else resolve(newProduct);
+        });
+      });
+    },
     createUser: (root, {
       input
     }) => {

@@ -22,7 +22,7 @@ var _orderRouter = _interopRequireDefault(require("./routers/orderRouter.js"));
 
 var _uploadRouter = _interopRequireDefault(require("./routers/uploadRouter.js"));
 
-var _schema = require("./schema");
+var _schema = require("./schema.js");
 
 var _expressGraphql = require("express-graphql");
 
@@ -40,7 +40,7 @@ const app = (0, _express.default)();
 
 const _dirname = _path.default.resolve();
 
-server.use('/graphql', (0, _expressGraphql.graphqlHTTP)({
+app.use('/graphql', (0, _expressGraphql.graphqlHTTP)({
   schema: _schema.schema,
   graphiql: true
 }));

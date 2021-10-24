@@ -12,7 +12,6 @@ export default function ProductNewScreen(props) {
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
-  const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
 
   const dispatch = useDispatch();
@@ -28,10 +27,12 @@ export default function ProductNewScreen(props) {
         price,
         image,
         category,
-        brand,
         countInStock,
         description,
-        seller: userInfo._id
+        seller: {
+          rating: 4,
+          numReviews: 5
+        }
       })
     );
   };
@@ -118,16 +119,6 @@ export default function ProductNewScreen(props) {
                 placeholder="Enter category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="brand">Brand</label>
-              <input
-                id="brand"
-                type="text"
-                placeholder="Enter brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
               ></input>
             </div>
             <div>

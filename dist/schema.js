@@ -7,7 +7,7 @@ exports.schema = void 0;
 
 var _graphqlTools = require("graphql-tools");
 
-var _resolvers = require("./resolvers");
+var _resolvers = require("./resolvers.js");
 
 const typeDefs = `
     type User {
@@ -19,6 +19,28 @@ const typeDefs = `
         age: Int
         email: String
         contacts: [Contact]
+    }
+
+    type Product {
+        id: ID
+        name: String
+        seller: User
+        image: String
+        category: Category
+        description: String
+        price: Float
+        countInStock: Int
+        rating: Int
+        numReviews: Int
+        reviews: [Review]
+        weight: Float
+        newPrice: Int
+    }
+
+    type Review {
+        name: String
+        comment: String
+        rating: Int
     }
 
     type Alien {
@@ -39,6 +61,12 @@ const typeDefs = `
         OTHER
     }
 
+    enum Category {
+        TUNISIAN_SPECIALTY
+        MOROCCAN_SPECIALTY
+        OTHER
+    }
+
     type Email {
         email: User
     }
@@ -46,6 +74,7 @@ const typeDefs = `
     type Query {
         getOneUser(id: ID): User
         getAliens: [Alien]
+        getProducts: [Product]
     }
 
     input UserInput {
@@ -64,10 +93,37 @@ const typeDefs = `
         lastName: String
     }
 
+    input ReviewInput {
+        name: String
+        comment: String
+        rating: Int
+    }
+
+    input SellerInput {
+        rating: Int
+        numReviews: Int
+    }
+
+    input ProductInput {
+        name: String
+        seller: SellerInput
+        image: String
+        category: Category
+        description: String
+        price: Float
+        countInStock: Int
+        rating: Int
+        numReviews: Int
+        reviews: [ReviewInput]
+        weight: Float
+        newPrice: Int
+    }
+
     type Mutation {
         createUser(input: UserInput): User
         updateUser(input: UserInput): User
         deleteUser(id: ID!): String
+        createProduct(input: ProductInput): Product
     }
 `;
 const schema = (0, _graphqlTools.makeExecutableSchema)({

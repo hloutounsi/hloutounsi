@@ -78,11 +78,22 @@ export const createProduct = (product) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.post(
-      '/api/products',
-      product,
+    const productMutation = {
+      mutation: `
       {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
+        createProduct(input: ${product}) {
+          name
+        }
+      }
+    `
+    };
+    const { data } = await Axios.post(
+      '/graphql',
+      JSON.stringify(productMutation),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}` },
       }
     );
     dispatch({
