@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema(
     name: { type: String, required: true, unique: true },
     seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
     image: { type: String, required: true },
-    brand: { type: String, required: true },
+    brand: { type: Number, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -22,6 +22,8 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true },
     numReviews: { type: Number, required: true },
     reviews: [reviewSchema],
+    weight: { type: Number, required: true },
+    newPrice: {type: Number},
   },
   {
     timestamps: true,

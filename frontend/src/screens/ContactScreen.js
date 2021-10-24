@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import Alert from '@material-ui/lab/Alert';
 
 export default class Contact extends Component {
+componentDidMount() {
+  window.scrollTo(0, 0);
+}
   state = {
     name: "",
     message: "",
@@ -20,7 +24,7 @@ resetForm = () => {
       message: "",
       email: "",
       subject: "",
-      buttonText: "Message Sent",
+      buttonText: "Message envoyé",
     });
 
     setTimeout(() => {
@@ -59,6 +63,7 @@ resetForm = () => {
       email: this.state.email,
       message: this.state.message,
       subject: this.state.subject,
+      type: "contact"
     };
 
     try {
@@ -77,9 +82,9 @@ resetForm = () => {
         <h1>Contactez nous</h1>
         <TextField
           id="outlined-basic"
-          placeholder="Enter Subject"
+          placeholder="Entrer le sujet"
           label="Sujet"
-          variant="outlined"
+          
           value={this.state.subject}
           onChange={(e) => this.setState({ subject: e.target.value })}
           required
@@ -91,9 +96,9 @@ resetForm = () => {
 
         <TextField
           id="outlined-basic"
-          placeholder="Enter your name"
+          placeholder="Entrer le nom"
           label="Nom"
-          variant="outlined"
+          
           value={this.state.name}
           onChange={(e) => this.setState({ name: e.target.value })}
           required
@@ -107,8 +112,8 @@ resetForm = () => {
         <TextField
           id="outlined-basic"
           label="Email"
-          placeholder="Enter email address"
-          variant="outlined"
+          placeholder="Entrer l'email"
+          
           value={this.state.email}
           onChange={(e) => this.handleChangeEmail(e)}
           error={this.state.emailError}
@@ -122,11 +127,10 @@ resetForm = () => {
         <TextField
           id="standard-multiline-flexible"
           label="Message"
-          placeholder="Enter Message"
-          variant="outlined"
+          placeholder="Entrer le message"
+          
           multiline
           rowsMin={3}
-          rowsMax={4}
           value={this.state.message}
           onChange={(e) => this.setState({ message: e.target.value })}
           required
@@ -137,9 +141,9 @@ resetForm = () => {
         <br />
         <br />
         <div className="button--container">
-          <button type="submit" className="button button-primary">
+          <Button type="submit" color="primary" variant="contained">
             {this.state.buttonText}
-          </button>
+          </Button>
         </div>
       </form>
     );

@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     seller: {
       name: String,
       logo: String,
+      logo2: String,
       description: String,
       rating: { type: Number, default: 0, required: true },
       numReviews: { type: Number, default: 0, required: true },

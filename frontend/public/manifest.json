@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Hlou Tounsi",
+  "name": "Hlou Tounsi | Gateaux tunisiens",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "logo192.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
@@ -15,10 +15,10 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "514x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://hloutounsi.com",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

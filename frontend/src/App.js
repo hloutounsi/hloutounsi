@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
+import ReactGA from 'react-ga';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from './components/TextField';
+import Snackbar from './components/Snackbar';
+import Button from './components/Button';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import EmailIcon from '@material-ui/icons/Email';
+import CardContent from '@material-ui/core/CardContent';
+import RoomIcon from '@material-ui/icons/Room';
+import Typography from '@material-ui/core/Typography';
 import theme from './theme';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CartScreen from './screens/CartScreen';
+import DashboardScreen from './screens/DashboardScreen'
 import HomeScreen from './screens/HomeScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
+import CoffretScreen from './screens/CoffretScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductListScreen from './screens/ProductListScreen';
@@ -20,6 +35,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import ProductNewScreen from './screens/ProductNewScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import ContactScreen from './screens/ContactScreen';
@@ -32,15 +48,64 @@ import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 
+const useStyles = makeStyles({
+  paper: {
+    backgroundColor: 'transparent',
+    color: "#fff",
+    fontSize: "inherit",
+    marginBottom: 8,
+    minWidth: 300,
+    margin: 8
+  },
+  card: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: "#FFEFA5",
+    padding: theme.spacing(3)
+  },
+  cardContent: {
+    maxWidth: 400,
+  },
+  textField: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+  },
+  button: {
+    width: '100%',
+  },
+});
+
+ReactGA.initialize('UA-190302848-1');
+
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = useState('');
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error, user } = userDetails;
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (event) => {
+    Axios.post('/api/emails', {email}, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    event.preventDefault();
+    setOpen(true);
+    setEmail('');
   };
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
@@ -49,9 +114,22 @@ function App() {
     error: errorCategories,
     categories,
   } = productCategoryList;
+
   useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
     dispatch(listProductCategories());
-  }, [dispatch]);
+    if(user) {
+      ReactGA.set({
+        userId: user._id,
+        userName: user.name,
+        userEmail: user.email
+        // any data that is relevant to the user session
+        // that you would like to track with google analytics
+      })
+    }
+  }, [dispatch, user]);
+
+  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -101,14 +179,20 @@ function App() {
               component={ProductEditScreen}
               exact
             ></Route>
-            <Route path="/signin" component={SigninScreen}></Route>
+            <Route
+              path="/product/new"
+              component={ProductNewScreen}
+              exact
+            ></Route>
+            <Route exact={true} path="/signin" component={SigninScreen}></Route>
             <Route path="/contact" component={ContactScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/shipping" component={ShippingAddressScreen}></Route>
             <Route path="/payment" component={PaymentMethodScreen}></Route>
             <Route path="/placeorder" component={PlaceOrderScreen}></Route>
-            <Route path="/order/:id" component={OrderScreen}></Route>
-            <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+            <Route path="/box" component={CoffretScreen}></Route>
+            <PrivateRoute path="/order/:id" component={OrderScreen}></PrivateRoute>
+            <PrivateRoute path="/orderhistory" component={OrderHistoryScreen}></PrivateRoute>
             <Route
               path="/search/name/:name?"
               component={SearchScreen}
@@ -129,6 +213,7 @@ function App() {
               component={SearchScreen}
               exact
             ></Route>
+            <PrivateRoute path="/dashboard" component={DashboardScreen}></PrivateRoute>
             <PrivateRoute
               path="/profile"
               component={ProfileScreen}
@@ -160,8 +245,67 @@ function App() {
 
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
-          <footer className="row center" style={{ backgroundColor: "#BB1918", color: "#F8EBC0" }}>All right reserved</footer>
+            <Grid item xs={12}>
+              <Grid container justify="center" spacing={2} style={{ backgroundColor: "#BB1918", padding: 8 }}>
+                  <Grid className={classes.paper}>
+                  <CardContent>
+                    <div class="fb-page" data-href="https://www.facebook.com/Malika-110148140948324/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Malika-110148140948324/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Malika-110148140948324/">Malika</a></blockquote></div>
+                    </CardContent>
+                  </Grid>
+                  <Grid className={classes.paper}>
+                  <CardContent>
+                    <div className={classes.card}>
+                      <form onSubmit={handleSubmit} className={classes.cardContent}>
+                        <Typography variant="h2" component="h2" gutterBottom color="primary">
+                          NEWSLETTER
+                        </Typography>
+                        <Typography variant="h5" color="primary">
+                          Abonnez-vous et recevoir nos dernier nouvelles
+                        </Typography>
+                        <TextField
+                          noBorder
+                          className={classes.textField}
+                          placeholder="Your email"
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Button type="submit" color="primary" variant="contained" className={classes.button}>
+                          Abonnez vous
+                        </Button>
+                      </form>
+                    </div>
+                    </CardContent>
+                  </Grid>
+                  <Grid className={classes.paper}>
+                      <CardContent>
+                        <Link to="/"><img src="https://hloutounsi.com/images/logo.png" width={250} style={{backgroundColor: "#fff", padding: 10}}/></Link>
+                        <h3 style={{fontSize: "2rem"}}>
+                          CONTACT
+                        </h3>
+                        <Typography variant="body2" component="p" style={{fontSize: "inherit"}}>
+                          <RoomIcon /> rue du Lavoir Metz 57000, France
+                          <br />
+                          <PhoneAndroidIcon /> <a href="tel://+33766122563" style={{ color: "#fff" }}>+33 7 66 12 25 63</a>
+                          <br />
+                          <EmailIcon /> <a href="mailto:contact@hloutounsi.com" style={{ color: "#fff" }}>contact@hloutounsi.com</a>
+                          <br />
+                          <ContactMailIcon /> <Link to="/contact" style={{ color: "#fff" }}>Contactez-nous</Link>
+                        </Typography>
+                      </CardContent>
+                  </Grid>
+              </Grid>
+              <Grid container style={{ backgroundColor: "#eee", padding: 8 }}>
+                © 2021 Hlou Tounsi. Tous droits réservés
+              </Grid>
+            </Grid>
         </div>
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          message="Nous vous informerons de la date de l'arrivée de la premiere commande de gâteau"
+      />
       </BrowserRouter>
     </ThemeProvider>
   );

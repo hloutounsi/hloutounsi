@@ -1,6 +1,7 @@
 html {
   font-size: 62.5%; /* 16px x 62.5 = 10px = 1rem */
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
@@ -45,11 +46,13 @@ h1 {
 }
 h2 {
   font-size: 1.6rem;
-  padding: 1rem 0;
+  padding: 0;
+  margin-bottom: 10px;
 }
 
 a {
   text-decoration: none;
+  color: #a02020;
 }
 a:hover {
   color: #ff8000;
@@ -65,13 +68,10 @@ ul {
 li {
   margin-top: 1rem;
 }
-input,
-select,
-textarea,
-input:hover,
+
 select:hover,
 textarea:hover {
-  border: 0.1rem #fff solid;
+  border: 0.1rem #eee solid;
 }
 button.primary {
   background-color: #BB1918;
@@ -168,10 +168,6 @@ button.close-sidebar {
   padding: 0.3rem 0.8rem;
 }
 
-/* Image */
-img {
-  border-radius: 0.5rem;
-}
 img.small {
   max-width: 5rem;
   width: 100%;
@@ -190,6 +186,7 @@ img.large {
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
+  min-height: 340px;
 }
 .card-body {
   padding: 1rem;
@@ -297,21 +294,21 @@ img.large {
 .table button {
   margin: 0 0.2rem;
 }
-/* Carousel */
-.carousel .slide img {
-  max-width: 30rem;
-}
 
 /* Search */
 .search button {
   border-radius: 0 0.5rem 0.5rem 0;
   border-right: none;
   margin-right: 0.5rem;
+  border: 1px solid #F8EBC0;
 }
 .search input {
   border-radius: 0.5rem 0 0 0.5rem;
   border-right: none;
-  margin-left: 1rem;
+  height: 1em !important;
+}
+input {
+  height: 1.8em !important;
 }
 .active {
   font-weight: bold;

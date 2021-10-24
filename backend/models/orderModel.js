@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema(
       country: { type: String, required: true },
       lat: Number,
       lng: Number,
-      type: Boolean,
+      type: { type: Boolean, default: false },
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {
@@ -34,7 +34,6 @@ const orderSchema = new mongoose.Schema(
     },
     itemsPrice: { type: Number, required: true },
     shippingPrice: { type: Number, required: true },
-    taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { detailsUser, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -62,7 +64,7 @@ export default function ProfileScreen() {
     <div>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>User Profile</h1>
+          <h1>Profil utilisateur</h1>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -76,87 +78,87 @@ export default function ProfileScreen() {
             )}
             {successUpdate && (
               <MessageBox variant="success">
-                Profile Updated Successfully
+                Mise à jour du profil réussie
               </MessageBox>
             )}
             <div>
-              <label htmlFor="name">Name</label>
-              <input
+              <TextField
                 id="name"
                 type="text"
                 placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></input>
+                label="Nom et prénom"
+              />
             </div>
             <div>
-              <label htmlFor="email">Email</label>
-              <input
+              <TextField
                 id="email"
                 type="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              ></input>
+                label="Email"
+              />
             </div>
             <div>
-              <label htmlFor="password">Password</label>
-              <input
+              <TextField
                 id="password"
                 type="password"
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
-              ></input>
+                label="Mot de passe"
+              />
             </div>
             <div>
-              <label htmlFor="confirmPassword">confirm Password</label>
-              <input
+              <TextField
                 id="confirmPassword"
                 type="password"
                 placeholder="Enter confirm password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
-              ></input>
+                label="Confirmer le mot de passe"
+              />
             </div>
             {user.isSeller && (
               <>
-                <h2>Seller</h2>
+                <h2>Vendeur</h2>
                 <div>
-                  <label htmlFor="sellerName">Seller Name</label>
-                  <input
+                  <TextField
                     id="sellerName"
                     type="text"
                     placeholder="Enter Seller Name"
                     value={sellerName}
                     onChange={(e) => setSellerName(e.target.value)}
-                  ></input>
+                    label="Nom de vendeur"
+                  />
                 </div>
                 <div>
-                  <label htmlFor="sellerLogo">Seller Logo</label>
-                  <input
+                  <TextField
                     id="sellerLogo"
                     type="text"
                     placeholder="Enter Seller Logo"
                     value={sellerLogo}
                     onChange={(e) => setSellerLogo(e.target.value)}
-                  ></input>
+                    label="Logo de vendeur"
+                  />
                 </div>
                 <div>
-                  <label htmlFor="sellerDescription">Seller Description</label>
-                  <input
+                  <TextField
                     id="sellerDescription"
                     type="text"
                     placeholder="Enter Seller Description"
                     value={sellerDescription}
                     onChange={(e) => setSellerDescription(e.target.value)}
-                  ></input>
+                    label="Description de vendeur"
+                  />
                 </div>
               </>
             )}
             <div>
               <label />
-              <button className="primary" type="submit">
-                Update
-              </button>
+              <Button color="primary" type="submit" variant="contained">
+                Mise à jour
+              </Button>
             </div>
           </>
         )}

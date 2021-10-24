@@ -153,11 +153,11 @@ export default function ProductEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="brand">Brand</label>
+              <label htmlFor="brand">Nombre de pieces</label>
               <input
                 id="brand"
                 type="text"
-                placeholder="Enter brand"
+                placeholder="Enter Nombre de piece"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               ></input>

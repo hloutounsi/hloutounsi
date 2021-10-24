@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
@@ -35,30 +37,30 @@ export default function SigninScreen(props) {
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label htmlFor="email">Email</label>
-          <input
+          <TextField
             type="email"
             id="email"
             placeholder="Enter email"
             required
             onChange={(e) => setEmail(e.target.value)}
-          ></input>
+            label="Email"
+          />
         </div>
         <div>
-          <label htmlFor="password">Mot de passe</label>
-          <input
+          <TextField
             type="password"
             id="password"
             placeholder="Enter password"
             required
             onChange={(e) => setPassword(e.target.value)}
-          ></input>
+            label="Mot de passe"
+          />
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
+          <Button color="primary" type="submit" variant="contained">
             Connexion
-          </button>
+          </Button>
         </div>
         <div>
           <label />

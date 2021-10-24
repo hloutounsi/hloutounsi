@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://hloutounsi.com",
+  "proxy": "http://localhost:5000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,8 +11,15 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
+    "highcharts": "^9.0.0",
+    "highcharts-react-official": "^3.0.0",
+    "immutability-helper": "^3.1.1",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-ga": "^3.3.0",
+    "react-moment": "^1.1.1",
     "react-paypal-button-v2": "^2.6.2",
     "react-redux": "^7.2.1",
     "react-responsive-carousel": "^3.2.10",

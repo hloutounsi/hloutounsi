@@ -222,8 +222,9 @@ export default function Header({
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/">
-          <Typography className={classes.title} variant="h4" noWrap>
+          <Link to="/" className={classes.title}>
+          <img src={"/images/logoHeader.png"} style={{ float: 'left', marginRight: 10 }} />
+          <Typography  variant="h4" noWrap>
             Gâteau Tunisien
           </Typography>
           </Link>

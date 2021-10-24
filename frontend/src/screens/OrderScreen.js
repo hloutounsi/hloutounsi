@@ -2,8 +2,11 @@ import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Moment from "react-moment";
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import {
@@ -37,13 +40,40 @@ export default function OrderScreen(props) {
       const { data } = await Axios.get('/api/config/paypal');
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=EUR`;
       script.async = true;
       script.onload = () => {
         setSdkReady(true);
       };
       document.body.appendChild(script);
     };
+    const sendEmail = () => {
+      const dateMin = moment().add(4, 'd').format("DD/MM/YYYY");
+      const dateMax = moment().add(10, 'd').format("DD/MM/YYYY");
+        let data = {
+          name: order.shippingAddress.fullName,
+          email: userInfo.email,
+          total: order.totalPrice.toFixed(2),
+          orderId: order._id,
+          dateMin,
+          dateMax,
+          type: "payed",
+          shippingType: order.shippingAddress.type ? "à domicile" : "en point relais",
+        };
+        try {
+          Axios.post("/api/send", data);
+          order.orderItems.forEach((item) => {
+            Axios.get(`/api/products/${item.product}`)
+            .then(response => dispatch(updateProduct({
+              ...response.data,
+              brand: 14,
+              countInStock: response.data.countInStock - item.qty,
+            })))
+          });
+        } catch (error) {
+          console.log(error);
+        }
+    }
     if (
       !order ||
       successPay ||
@@ -60,6 +90,9 @@ export default function OrderScreen(props) {
         } else {
           setSdkReady(true);
         }
+      } else {
+        console.log({...order.orderItems[0]._id})
+        sendEmail();
       }
     }
   }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
@@ -83,7 +116,7 @@ export default function OrderScreen(props) {
           <ul>
             <li>
               <div className="card card-body">
-                <h2>Livraison</h2>
+              <h2>Méthode de Livraison {order.shippingAddress.type ? "à domicile" : "en point relais"}</h2>
                 <p>
                   <strong>Nom:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Adresse: </strong> {order.shippingAddress.address},
@@ -108,7 +141,7 @@ export default function OrderScreen(props) {
                 </p>
                 {order.isPaid ? (
                   <MessageBox variant="success">
-                    Payé le {order.paidAt}
+                    Payé le <Moment format="DD/MM/YYYY">{order.paidAt}</Moment> à <Moment format="hh:mm">{order.paidAt}</Moment>
                   </MessageBox>
                 ) : (
                   <MessageBox variant="danger">Impayé</MessageBox>
@@ -166,12 +199,6 @@ export default function OrderScreen(props) {
               </li>
               <li>
                 <div className="row">
-                  <div>Taxe</div>
-                  <div>{order.taxPrice.toFixed(2)}‎€</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
                   <div>
                     <strong>Total</strong>
                   </div>
@@ -194,6 +221,7 @@ export default function OrderScreen(props) {
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
+                        currency="EUR"
                       ></PayPalButton>
                     </>
                   )}
