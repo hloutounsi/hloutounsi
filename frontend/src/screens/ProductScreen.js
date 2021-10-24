@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Fab from '@material-ui/core/Fab';
 import { createReview, detailsProduct } from '../actions/productActions';
@@ -188,8 +190,9 @@ export default function ProductScreen(props) {
                     </div>
                     <div>
                       <label htmlFor="rating">Évaluation</label>
-                      <select
+                      <Select
                         id="rating"
+                        native
                         value={rating}
                         onChange={(e) => setRating(e.target.value)}
                       >
@@ -199,21 +202,30 @@ export default function ProductScreen(props) {
                         <option value="3">3- Bien</option>
                         <option value="4">4- très bien</option>
                         <option value="5">5- Excellent</option>
-                      </select>
+                      </Select>
                     </div>
                     <div>
-                      <label htmlFor="comment">Commentaire</label>
-                      <textarea
+                      <TextareaAutosize
                         id="comment"
+                        label="Commentaire"
+                        placeholder="Entrer la commentaire"
+                        multiline
+                        rowsMin={3}
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                      ></textarea>
+                        style={{ minWidth: '50%' }}
+                      />
                     </div>
                     <div>
                       <label />
-                      <button className="primary" type="submit">
-                        Envoyer
-                      </button>
+                      <Button
+                          color="primary"
+                          variant="contained"
+                          className="block"
+                          type="submit"
+                        >
+                          Envoyer
+                        </Button>
                     </div>
                     <div>
                       {loadingReviewCreate && <LoadingBox></LoadingBox>}

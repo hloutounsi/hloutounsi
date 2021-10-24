@@ -131,7 +131,6 @@ resetForm = () => {
           
           multiline
           rowsMin={3}
-          rowsMax={4}
           value={this.state.message}
           onChange={(e) => this.setState({ message: e.target.value })}
           required

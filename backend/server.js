@@ -9,6 +9,8 @@ import emailRoute from './routers/emailRouter.js';
 import productRoute from './routers/productRouter.js';
 import orderRoute from './routers/orderRouter.js';
 import uploadRoute from './routers/uploadRouter.js';
+import { schema } from './schema.js';
+import { graphqlHTTP } from 'express-graphql';
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose
@@ -20,7 +22,12 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true
+}))
 
 app.use(bodyParser.json());
 app.post('/api/send', async (req, res) => {
